@@ -1,19 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:math_riddles/pages/home_page.dart';
 import 'package:math_riddles/styles/theme.dart';
 import 'package:math_riddles/providers/theme_notifier.dart';
 
 void main() {
-  runApp(
-    ChangeNotifierProvider<ThemeNotifier>(
-      create: (context) =>
-          ThemeNotifier(darkTheme, darkTheme.accentColorBrightness),
-      child: App(),
-    ),
-  );
+  WidgetsFlutterBinding.ensureInitialized();
+  SharedPreferences.getInstance().then((prefs) {
+    var darkModeOn = prefs.getBool('darkMode') ?? true;
+
+    runApp(
+      ChangeNotifierProvider<ThemeNotifier>(
+        create: (context) => ThemeNotifier(
+          darkModeOn ? darkTheme : lightTheme,
+        ),
+        child: App(),
+      ),
+    );
+  });
 }
 
 class App extends StatelessWidget {
@@ -21,8 +28,8 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     final themeNotifier = Provider.of<ThemeNotifier>(context);
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-      statusBarColor: Theme.of(context).backgroundColor,
-      statusBarIconBrightness: themeNotifier.getBrightness(),
+      statusBarColor: Colors.transparent,
+      statusBarIconBrightness: themeNotifier.getTheme().accentColorBrightness,
     ));
 
     return MaterialApp(

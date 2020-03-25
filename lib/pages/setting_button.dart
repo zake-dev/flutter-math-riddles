@@ -1,31 +1,40 @@
 import 'package:flutter/material.dart';
 import 'package:math_riddles/pages/funky_overlay.dart';
+import 'package:math_riddles/pages/setting_page.dart';
 
-class SettingButton extends RaisedButton {
+class SettingButton extends Container {
   SettingButton(context)
       : super(
-          shape: CircleBorder(
-            side: BorderSide(color: Theme.of(context).accentColor),
+          width: 45.0,
+          height: 45.0,
+          margin: EdgeInsets.only(right: 8.0),
+          child: new RawMaterialButton(
+            shape: new CircleBorder(
+              side: BorderSide(
+                color: Theme.of(context).accentColor,
+                width: 1.2,
+              ),
+            ),
+            elevation: 0.0,
+            fillColor: Theme.of(context).primaryColor,
+            child: Icon(
+              Icons.settings,
+              color: Theme.of(context).accentColor,
+            ),
+            onPressed: () {
+              showDialog(
+                context: context,
+                builder: (_) => FunkyOverlay(_buildPage()),
+              );
+            },
           ),
-          padding: EdgeInsets.all(8.0),
-          color: Theme.of(context).accentColor,
-          child: Icon(
-            Icons.settings,
-            color: Theme.of(context).accentIconTheme.color,
-          ),
-          onPressed: () {
-            showDialog(
-              context: context,
-              builder: (_) => FunkyOverlay(_buildPage()),
-            );
-          },
         );
 
   static List<Widget> _buildPage() {
     return [
       Padding(
-        padding: const EdgeInsets.all(50.0),
-        child: Text("Well hello there!"),
+        padding: const EdgeInsets.fromLTRB(30, 30, 10, 30),
+        child: SettingsPage(),
       ),
     ];
   }

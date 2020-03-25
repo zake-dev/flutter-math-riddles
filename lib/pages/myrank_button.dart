@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:math_riddles/pages/funky_overlay.dart';
 
-class RankingButton extends Container {
-  RankingButton(context)
+class MyRankButton extends Container {
+  MyRankButton(context)
       : super(
           width: 45.0,
           height: 45.0,
@@ -18,7 +18,8 @@ class RankingButton extends Container {
             elevation: 0.0,
             fillColor: Theme.of(context).primaryColor,
             child: Icon(
-              MdiIcons.trophy,
+              MdiIcons.alphaM,
+              size: 42,
               color: Theme.of(context).accentColor,
             ),
             onPressed: () {
@@ -34,7 +35,7 @@ class RankingButton extends Container {
     return [
       Padding(
         padding: const EdgeInsets.all(100.0),
-        child: Text("Ranking Here!"),
+        child: Text("MyRank will be shown here."),
       ),
     ];
   }
