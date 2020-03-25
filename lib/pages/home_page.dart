@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:math_riddles/pages/Init.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:math_riddles/pages/gamestart_button.dart';
 import 'package:math_riddles/pages/ranking_button.dart';
 import 'package:math_riddles/pages/myrank_button.dart';
@@ -12,6 +14,8 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
+    Init().init(context);
+
     return Container(
       decoration: BoxDecoration(
         color: Theme.of(context).backgroundColor,
@@ -67,7 +71,6 @@ class _MainMenu extends Container {
           width: 250,
           height: 300,
           decoration: BoxDecoration(
-            // color: Colors.orange,
             color: Colors.transparent,
           ),
           alignment: Alignment.center,
@@ -83,33 +86,40 @@ class _MainMenu extends Container {
         );
 
   static Widget _buildTitle(context) {
-    final username = 'Zake';
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          'Hello,',
-          style: TextStyle(
-            decoration: TextDecoration.none,
-            color: Theme.of(context).accentColor,
-            fontFamily: 'Monserrat',
-            fontWeight: FontWeight.w200,
-            fontSize: 35,
-          ),
-        ),
-        Text(
-          '$username',
-          style: TextStyle(
-            decoration: TextDecoration.none,
-            color: Theme.of(context).accentColor,
-            fontFamily: 'Monserrat',
-            fontWeight: FontWeight.bold,
-            fontSize: 35,
-          ),
-        ),
-      ],
-    );
+    return FutureBuilder<String>(
+        future: _getUserName(),
+        builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
+          String _userName = snapshot.hasData ? snapshot.data : 'New User';
+          final nameFontSize =
+              (_userName.length < 8) ? 35.0 : 35.0 - 1 * (_userName.length - 8);
+
+          return Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Hello,',
+                style: TextStyle(
+                  decoration: TextDecoration.none,
+                  color: Theme.of(context).accentColor,
+                  fontFamily: 'Monserrat',
+                  fontWeight: FontWeight.w200,
+                  fontSize: 35,
+                ),
+              ),
+              Text(
+                _userName,
+                style: TextStyle(
+                  decoration: TextDecoration.none,
+                  color: Theme.of(context).accentColor,
+                  fontFamily: 'Monserrat',
+                  fontWeight: FontWeight.bold,
+                  fontSize: nameFontSize,
+                ),
+              ),
+            ],
+          );
+        });
   }
 
   static Widget _buildGameButton(context) {
@@ -133,5 +143,10 @@ class _MainMenu extends Container {
         children: buttons,
       ),
     );
+  }
+
+  static Future<String> _getUserName() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getString('UserName');
   }
 }
