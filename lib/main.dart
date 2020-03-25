@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:math_riddles/widget/app_builder.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -32,11 +33,13 @@ class App extends StatelessWidget {
       statusBarIconBrightness: themeNotifier.getTheme().accentColorBrightness,
     ));
 
-    return MaterialApp(
-      title: 'Math Riddles - Infinite Math Challenges, Puzzles, Riddles',
-      theme: themeNotifier.getTheme(),
-      home: HomePage(),
-      debugShowCheckedModeBanner: false,
+    return AppBuilder(
+      builder: (context) => MaterialApp(
+        title: 'Math Riddles - Infinite Math Challenges, Puzzles, Riddles',
+        theme: themeNotifier.getTheme(),
+        home: HomePage(),
+        debugShowCheckedModeBanner: false,
+      ),
     );
   }
 }

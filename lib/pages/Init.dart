@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:math_riddles/widget/app_builder.dart';
 import 'package:math_riddles/widget/custom_dialog.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -93,7 +94,7 @@ class Init {
                         ),
                       );
                     } else {
-                      _setUserName(username);
+                      _setUserName(username, context);
                       Navigator.pop(context);
                     }
                   },
@@ -106,8 +107,9 @@ class Init {
     }
   }
 
-  void _setUserName(String username) async {
+  void _setUserName(String username, BuildContext context) async {
     final prefs = await SharedPreferences.getInstance();
     prefs.setString('UserName', username);
+    AppBuilder.of(context).rebuild();
   }
 }
