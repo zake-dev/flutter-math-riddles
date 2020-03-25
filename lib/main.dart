@@ -7,13 +7,10 @@ import 'package:math_riddles/styles/theme.dart';
 import 'package:math_riddles/providers/theme_notifier.dart';
 
 void main() {
-  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-    statusBarColor: Colors.transparent,
-  ));
-
   runApp(
     ChangeNotifierProvider<ThemeNotifier>(
-      create: (context) => ThemeNotifier(darkTheme),
+      create: (context) =>
+          ThemeNotifier(darkTheme, darkTheme.accentColorBrightness),
       child: App(),
     ),
   );
@@ -22,8 +19,12 @@ void main() {
 class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    print(MaterialLocalizations.of(context));
     final themeNotifier = Provider.of<ThemeNotifier>(context);
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+      statusBarColor: Theme.of(context).backgroundColor,
+      statusBarIconBrightness: themeNotifier.getBrightness(),
+    ));
+
     return MaterialApp(
       title: 'Math Riddles - Infinite Math Challenges, Puzzles, Riddles',
       theme: themeNotifier.getTheme(),

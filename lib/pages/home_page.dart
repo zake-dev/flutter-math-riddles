@@ -57,6 +57,8 @@ class _BackGround extends Container {
       letter,
       style: TextStyle(
         decoration: TextDecoration.none,
+        fontFamily: 'Montserrat',
+        fontWeight: FontWeight.w100,
         fontSize: 100,
         color: Theme.of(context).accentColor,
       ),

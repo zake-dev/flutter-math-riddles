@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:math_riddles/pages/funky_overlay.dart';
 
 class RankingButton extends RaisedButton {
   RankingButton(context)
@@ -16,66 +17,17 @@ class RankingButton extends RaisedButton {
           onPressed: () {
             showDialog(
               context: context,
-              builder: (_) => _FunkyOverlay(),
+              builder: (_) => FunkyOverlay(_buildPage()),
             );
           },
         );
-}
 
-class _FunkyOverlay extends StatefulWidget {
-  @override
-  State<StatefulWidget> createState() => _FunkyOverlayState();
-}
-
-class _FunkyOverlayState extends State<_FunkyOverlay>
-    with SingleTickerProviderStateMixin {
-  AnimationController controller;
-  Animation<double> scaleAnimation;
-
-  @override
-  void initState() {
-    super.initState();
-
-    controller =
-        AnimationController(vsync: this, duration: Duration(milliseconds: 450));
-    scaleAnimation =
-        CurvedAnimation(parent: controller, curve: Curves.elasticInOut);
-
-    controller.addListener(() {
-      setState(() {});
-    });
-
-    controller.forward();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Material(
-        color: Colors.transparent,
-        child: ScaleTransition(
-          scale: scaleAnimation,
-          child: Container(
-            decoration: ShapeDecoration(
-                color: Theme.of(context).backgroundColor,
-                shape: RoundedRectangleBorder(
-                    side: BorderSide(
-                      color: Theme.of(context).accentColor,
-                      width: 2.2,
-                    ),
-                    borderRadius: BorderRadius.circular(15.0))),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(100.0),
-                  child: Text("Ranking Here!"),
-                ),
-              ],
-            ),
-          ),
-        ),
+  static List<Widget> _buildPage() {
+    return [
+      Padding(
+        padding: const EdgeInsets.all(100.0),
+        child: Text("Ranking Here!"),
       ),
-    );
+    ];
   }
 }
