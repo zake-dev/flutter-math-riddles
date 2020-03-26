@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:math_riddles/pages/funky_overlay.dart';
+import 'package:math_riddles/widget/funky_overlay.dart';
 import 'package:math_riddles/pages/setting_page.dart';
 
 class SettingButton extends Container {

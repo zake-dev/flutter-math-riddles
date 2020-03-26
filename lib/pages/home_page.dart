@@ -79,7 +79,7 @@ class _MainMenu extends Container {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               _buildTitle(context),
-              _buildGameButton(context),
+              GameButton(),
               _buildButtons(context),
             ],
           ),
@@ -120,12 +120,6 @@ class _MainMenu extends Container {
             ],
           );
         });
-  }
-
-  static Widget _buildGameButton(context) {
-    var currentMessage = 'New Game';
-    // currentMessage = 'Continue';
-    return GameButton(context, currentMessage);
   }
 
   static Widget _buildButtons(context) {

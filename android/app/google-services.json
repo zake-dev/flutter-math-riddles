@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "690682162291",
+    "firebase_url": "https://infinite-math-riddles.firebaseio.com",
+    "project_id": "infinite-math-riddles",
+    "storage_bucket": "infinite-math-riddles.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:690682162291:android:d07389f1d42360c790ce06",
+        "android_client_info": {
+          "package_name": "com.example.math_riddles"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "690682162291-16man4jvhgffpnie3sl2fmbb0aojnru4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAtgmXxoBhTQJlHSwY0cJ6dU305OW3wepw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "690682162291-16man4jvhgffpnie3sl2fmbb0aojnru4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

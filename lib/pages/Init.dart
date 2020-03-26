@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:math_riddles/widget/app_builder.dart';
 import 'package:math_riddles/widget/custom_dialog.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:math_riddles/utils/database.dart';
 
 class Init {
   final _controller = TextEditingController();
@@ -94,8 +95,7 @@ class Init {
                         ),
                       );
                     } else {
-                      _setUserName(username, context);
-                      Navigator.pop(context);
+                      _setUserdata(username, context);
                     }
                   },
                 ),
@@ -107,9 +107,11 @@ class Init {
     }
   }
 
-  void _setUserName(String username, BuildContext context) async {
+  void _setUserdata(String username, BuildContext context) async {
     final prefs = await SharedPreferences.getInstance();
     prefs.setString('UserName', username);
+    DB.setUser(username);
     AppBuilder.of(context).rebuild();
+    Navigator.pop(context);
   }
 }

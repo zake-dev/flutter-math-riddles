@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-import 'package:math_riddles/pages/funky_overlay.dart';
+import 'package:math_riddles/widget/funky_overlay.dart';
 
 class RankingButton extends Container {
   RankingButton(context)

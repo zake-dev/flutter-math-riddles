@@ -1,15 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:math_riddles/utils/database.dart';
 
-class GameButton extends Container {
-  GameButton(BuildContext context, String currentMessage)
-      : super(
+class GameButton extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final score = DB.getScore();
+    return FutureBuilder(
+      future: score,
+      builder: (BuildContext context, AsyncSnapshot snapshot) {
+        final buttonText = (snapshot.data > 0) ? 'Continue' : 'New Game';
+        return Container(
           width: 220,
           height: 50,
           margin: EdgeInsets.symmetric(vertical: 15),
           child: RaisedButton(
             color: Theme.of(context).accentColor,
             child: Text(
-              currentMessage,
+              buttonText,
               style: TextStyle(
                 decoration: TextDecoration.none,
                 fontFamily: 'Montserrat',
@@ -19,9 +26,10 @@ class GameButton extends Container {
                 color: Theme.of(context).primaryColor,
               ),
             ),
-            onPressed: () {
-              print('pressed');
-            },
+            onPressed: () {},
           ),
         );
+      },
+    );
+  }
 }
