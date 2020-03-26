@@ -1,67 +1,78 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:math_riddles/models/user.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:device_info/device_info.dart';
+import 'package:math_riddles/utils/connectivity.dart' as NetworkConnection;
 
 class DB {
   static final firestore = Firestore.instance;
 
-  static Future<User> getUser() async {
-    final androidInfo = await DeviceInfoPlugin().androidInfo;
-    final deviceID = androidInfo.androidId;
+  static Future<void> updateUser(String deviceID) async {
+    final hasConnection = await NetworkConnection.check();
+    if (!hasConnection) {
+      return;
+    }
+
+    final prefs = await SharedPreferences.getInstance();
+    if (!prefs.containsKey('hasRecord')) {
+      return;
+    }
+
+    final timestamp = DateTime.now().toIso8601String();
+    final score = prefs.getInt('score');
+    firestore
+        .collection('users')
+        .document(deviceID)
+        .updateData({'score': score, 'last_login': timestamp});
+  }
+
+  static Future<void> fetchData(String deviceID) async {
+    final hasConnection = await NetworkConnection.check();
+    if (!hasConnection) {
+      return;
+    }
 
     final document =
         await firestore.collection('users').document(deviceID).get();
-    if (!document.exists) {
-      _initUser(deviceID);
-      return User(deviceID, null, 0, true);
-    } else {
-      await _fetchData(document);
 
-      final timestamp = DateTime.now().toIso8601String();
-      firestore
-          .collection('users')
-          .document(deviceID)
-          .updateData({'last_login': timestamp});
-
+    if (document.exists) {
       final prefs = await SharedPreferences.getInstance();
-      final username = prefs.getString('username');
-      final score = prefs.getInt('score');
-      final darkModeOn = prefs.getBool('darkMode') ?? true;
-      return User(deviceID, username, score, darkModeOn);
+      await prefs.setString('username', document.data['username']);
+      await prefs.setInt('score', document.data['score']);
+    } else {
+      await _initUser(deviceID);
     }
   }
 
-  static void _initUser(String deviceID) async {
-    final prefs = await SharedPreferences.getInstance();
-    prefs.setString('deviceID', deviceID);
-    prefs.setInt('score', 0);
-    prefs.setBool('darkMode', true);
-
+  static Future<void> _initUser(String deviceID) async {
     final timestamp = DateTime.now().toIso8601String();
-    firestore.collection('users').document(deviceID).setData(
-      {
-        'score': 0,
-        'last_login': timestamp,
-      },
-      merge: true,
-    );
-  }
-
-  static Future<void> _fetchData(DocumentSnapshot document) async {
-    final prefs = await SharedPreferences.getInstance();
-    prefs.setInt('score', document.data['score']);
-    print(document.data['username']);
-    await prefs.setString('username', document.data['username']);
-  }
-
-  static Future<void> setUsername(String name) async {
-    final prefs = await SharedPreferences.getInstance();
-    final deviceID = prefs.getString('deviceID');
     await firestore
         .collection('users')
         .document(deviceID)
-        .setData({'username': name}, merge: true);
+        .setData({'username': null, 'score': 0, 'last_login': timestamp});
+
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool('hasRecord', true);
+    await prefs.setString('deviceID', deviceID);
+  }
+
+  static Future<bool> getTheme() async {
+    final prefs = await SharedPreferences.getInstance();
+    final darkModeOn = prefs.getBool('darkMode') ?? true;
+    return darkModeOn;
+  }
+
+  static Future<String> getUsername() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getString('username');
+  }
+
+  static Future<void> setUsername(String username) async {
+    final prefs = await SharedPreferences.getInstance();
+    final deviceID = prefs.getString('deviceID');
+    await prefs.setString('username', username);
+    await firestore
+        .collection('users')
+        .document(deviceID)
+        .setData({'username': username}, merge: true);
   }
 
   static Future<int> getScore() async {
@@ -73,11 +84,6 @@ class DB {
   static void addScore(int point) async {
     final prefs = await SharedPreferences.getInstance();
     final score = prefs.getInt('score');
-    final deviceID = prefs.getString('deviceID');
     prefs.setInt('score', score + point);
-    firestore
-        .collection('users')
-        .document(deviceID)
-        .updateData({'score': score + point});
   }
 }
