@@ -8,9 +8,9 @@ import 'package:math_riddles/utils/database.dart';
 class Init {
   final _controller = TextEditingController();
 
-  Future<void> init(context) async {
+  Future<void> init(context, user) async {
     final prefs = await SharedPreferences.getInstance();
-    if (!prefs.containsKey('UserName')) {
+    if (!prefs.containsKey('username')) {
       showDialog(
         barrierDismissible: false,
         context: context,
@@ -95,6 +95,7 @@ class Init {
                         ),
                       );
                     } else {
+                      user.username = username;
                       _setUserdata(username, context);
                     }
                   },
@@ -108,9 +109,7 @@ class Init {
   }
 
   void _setUserdata(String username, BuildContext context) async {
-    final prefs = await SharedPreferences.getInstance();
-    prefs.setString('UserName', username);
-    DB.setUser(username);
+    await DB.setUsername(username);
     AppBuilder.of(context).rebuild();
     Navigator.pop(context);
   }
