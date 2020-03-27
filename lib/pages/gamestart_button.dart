@@ -14,7 +14,9 @@ class _GameButtonState extends State<GameButton> {
     return FutureBuilder(
       future: score,
       builder: (BuildContext context, AsyncSnapshot snapshot) {
-        final buttonText = (snapshot.data > 0) ? 'Continue' : 'New Game';
+        final buttonText = (snapshot.data == null || snapshot.data == 0)
+            ? 'New Game'
+            : 'Continue';
         return Container(
           width: 220,
           height: 50,

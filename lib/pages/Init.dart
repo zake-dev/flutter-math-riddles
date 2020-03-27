@@ -94,6 +94,7 @@ Future<void> init(context) async {
                       ),
                     );
                   } else {
+                    CircularProgressIndicator();
                     _setUserdata(username, context);
                   }
                 },

@@ -34,6 +34,7 @@ class DB {
 
     if (document.exists) {
       final prefs = await SharedPreferences.getInstance();
+      await prefs.setString('deviceID', deviceID);
       await prefs.setString('username', document.data['username']);
       await prefs.setInt('score', document.data['score']);
       await prefs.setBool('hasRecord', true);
@@ -85,5 +86,16 @@ class DB {
     final prefs = await SharedPreferences.getInstance();
     final score = prefs.getInt('score') ?? 0;
     prefs.setInt('score', score + point);
+  }
+
+  static Future<void> deleteCurrentUser() async {
+    // Clear UserPrefs
+    final prefs = await SharedPreferences.getInstance();
+    final deviceID = prefs.getString('deviceID');
+    print('deviceID = $deviceID');
+    prefs.clear();
+
+    // Clear Database
+    await firestore.collection('users').document(deviceID).delete();
   }
 }
