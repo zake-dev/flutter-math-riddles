@@ -17,11 +17,10 @@ class DB {
     }
 
     final timestamp = DateTime.now().toIso8601String();
-    final score = prefs.getInt('score');
-    firestore
-        .collection('users')
-        .document(deviceID)
-        .updateData({'score': score, 'last_login': timestamp});
+    final username = prefs.getString('username');
+    final score = prefs.getInt('score') ?? 0;
+    firestore.collection('users').document(deviceID).updateData(
+        {'username': username, 'score': score, 'last_login': timestamp});
   }
 
   static Future<void> fetchData(String deviceID) async {
@@ -37,6 +36,7 @@ class DB {
       final prefs = await SharedPreferences.getInstance();
       await prefs.setString('username', document.data['username']);
       await prefs.setInt('score', document.data['score']);
+      await prefs.setBool('hasRecord', true);
     } else {
       await _initUser(deviceID);
     }

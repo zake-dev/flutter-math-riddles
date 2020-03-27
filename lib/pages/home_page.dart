@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:math_riddles/pages/Init.dart' as Init;
 import 'package:math_riddles/pages/gamestart_button.dart';
 import 'package:math_riddles/pages/ranking_button.dart';
-import 'package:math_riddles/pages/myrank_button.dart';
 import 'package:math_riddles/pages/setting_button.dart';
 import 'package:math_riddles/utils/database.dart';
 
@@ -124,7 +123,6 @@ class _MainMenu extends Container {
 
   static Widget _buildButtons(context) {
     final buttons = [
-      MyRankButton(context),
       RankingButton(context),
       SettingButton(context),
     ];
