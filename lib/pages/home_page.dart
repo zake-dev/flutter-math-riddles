@@ -68,7 +68,7 @@ class _MainMenu extends Container {
   _MainMenu(BuildContext context)
       : super(
           width: 250,
-          height: 300,
+          height: 400,
           decoration: BoxDecoration(
             color: Colors.transparent,
           ),
@@ -79,6 +79,7 @@ class _MainMenu extends Container {
             children: [
               _buildTitle(context),
               GameButton(),
+              _buildScoreboard(context),
               _buildButtons(context),
             ],
           ),
@@ -119,6 +120,47 @@ class _MainMenu extends Container {
             ],
           );
         });
+  }
+
+  static Widget _buildScoreboard(context) {
+    return FutureBuilder(
+      future: DB.getScore(),
+      builder: (context, snapshot) {
+        final int score = snapshot.hasData ? snapshot.data : 0;
+
+        return Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'You are now at,',
+              style: TextStyle(
+                decoration: TextDecoration.none,
+                color: Theme.of(context).accentColor,
+                fontFamily: 'Monserrat',
+                fontWeight: FontWeight.w200,
+                fontSize: 30,
+              ),
+            ),
+            SizedBox(
+              height: 3,
+            ),
+            Text(
+              '$score pts',
+              textAlign: TextAlign.end,
+              style: TextStyle(
+                decoration: TextDecoration.none,
+                color: Theme.of(context).accentColor,
+                fontFamily: 'Monserrat',
+                fontWeight: FontWeight.bold,
+                fontSize: 35,
+              ),
+            ),
+          ],
+        );
+      },
+    );
   }
 
   static Widget _buildButtons(context) {
