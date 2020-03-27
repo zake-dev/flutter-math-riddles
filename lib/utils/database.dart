@@ -85,7 +85,8 @@ class DB {
   static void addScore(int point) async {
     final prefs = await SharedPreferences.getInstance();
     final score = prefs.getInt('score') ?? 0;
-    prefs.setInt('score', score + point);
+    final newScore = (score + point <= 1000000) ? score + point : 1000000;
+    prefs.setInt('score', newScore);
   }
 
   static Future<void> deleteCurrentUser() async {

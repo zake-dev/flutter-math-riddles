@@ -8,8 +8,8 @@ class SettingButton extends Container {
           width: 45.0,
           height: 45.0,
           margin: EdgeInsets.only(right: 8.0),
-          child: new RawMaterialButton(
-            shape: new CircleBorder(
+          child: RawMaterialButton(
+            shape: CircleBorder(
               side: BorderSide(
                 color: Theme.of(context).accentColor,
                 width: 1.2,

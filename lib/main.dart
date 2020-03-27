@@ -36,7 +36,6 @@ class App extends StatelessWidget {
         title: 'Math Riddles - Infinite Math Challenges, Puzzles, Riddles',
         theme: themeNotifier.getTheme(),
         home: Splashscreen(),
-        debugShowCheckedModeBanner: false,
       ),
     );
   }

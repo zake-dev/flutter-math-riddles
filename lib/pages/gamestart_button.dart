@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:math_riddles/pages/game_page.dart';
 import 'package:math_riddles/utils/database.dart';
+import 'package:math_riddles/widget/slide_route.dart';
 
 class GameButton extends StatefulWidget {
   @override
@@ -35,7 +37,8 @@ class _GameButtonState extends State<GameButton> {
               ),
             ),
             onPressed: () {
-              print('pressed');
+              Navigator.of(context)
+                  .push(SlideRoute(page: GamePage(), direction: 'left'));
             },
           ),
         );

@@ -15,14 +15,23 @@ class CustomDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Dialog(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(this.padding),
-      ),
-      elevation: 0,
-      backgroundColor: Colors.transparent,
-      child: dialogContent(context),
-    );
+    return LayoutBuilder(builder: (context, viewportConstraints) {
+      return SingleChildScrollView(
+        child: ConstrainedBox(
+          constraints: BoxConstraints(
+            minHeight: viewportConstraints.maxHeight,
+          ),
+          child: Dialog(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(this.padding),
+            ),
+            elevation: 0,
+            backgroundColor: Colors.transparent,
+            child: dialogContent(context),
+          ),
+        ),
+      );
+    });
   }
 
   Widget dialogContent(BuildContext context) {

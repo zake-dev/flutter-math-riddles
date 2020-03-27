@@ -22,7 +22,7 @@ class _HomePageState extends State<HomePage> {
       child: Stack(
         children: [
           _BackGround(context),
-          Align(alignment: Alignment(0.45, 0.0), child: _MainMenu(context)),
+          Align(alignment: Alignment(0.45, 0.1), child: _MainMenu(context)),
         ],
       ),
     );
@@ -157,6 +157,7 @@ class _MainMenu extends Container {
                 fontSize: 35,
               ),
             ),
+            SizedBox(height: 3),
           ],
         );
       },
