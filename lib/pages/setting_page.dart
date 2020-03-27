@@ -17,8 +17,8 @@ class _SettingsPageState extends State<SettingsPage> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 280,
-      height: 120,
+      width: 260,
+      height: 90,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         mainAxisSize: MainAxisSize.max,
@@ -26,7 +26,7 @@ class _SettingsPageState extends State<SettingsPage> {
           _buildSettingTitle(
             context,
             'Settings',
-            size: 30,
+            size: 25,
             fontWeight: FontWeight.w400,
             marginRight: 20,
           ),
@@ -47,7 +47,7 @@ class _SettingsPageState extends State<SettingsPage> {
   Widget _buildSettingTitle(
     BuildContext context,
     String title, {
-    double size = 21.0,
+    double size = 18.0,
     FontWeight fontWeight = FontWeight.w200,
     double marginRight = 0,
   }) {

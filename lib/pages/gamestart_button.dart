@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:math_riddles/utils/database.dart';
 
-class GameButton extends StatelessWidget {
+class GameButton extends StatefulWidget {
+  @override
+  _GameButtonState createState() => _GameButtonState();
+}
+
+class _GameButtonState extends State<GameButton> {
   @override
   Widget build(BuildContext context) {
     final score = DB.getScore();
+
     return FutureBuilder(
       future: score,
       builder: (BuildContext context, AsyncSnapshot snapshot) {
@@ -26,7 +32,9 @@ class GameButton extends StatelessWidget {
                 color: Theme.of(context).primaryColor,
               ),
             ),
-            onPressed: () {},
+            onPressed: () {
+              print('pressed');
+            },
           ),
         );
       },

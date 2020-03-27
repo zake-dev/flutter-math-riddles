@@ -9,6 +9,7 @@ final darkTheme = ThemeData(
   accentColor: Colors.white,
   accentIconTheme: IconThemeData(color: Colors.black),
   dividerColor: Colors.black12,
+  canvasColor: Color(0xFFD1CAC3),
 );
 
 final lightTheme = ThemeData(
@@ -20,4 +21,5 @@ final lightTheme = ThemeData(
   accentColor: Color(0xFF110A03),
   accentIconTheme: IconThemeData(color: Colors.white),
   dividerColor: Colors.white54,
+  canvasColor: Color(0xFF413A33),
 );
