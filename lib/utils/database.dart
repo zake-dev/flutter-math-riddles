@@ -83,7 +83,7 @@ class DB {
 
   static void addScore(int point) async {
     final prefs = await SharedPreferences.getInstance();
-    final score = prefs.getInt('score');
+    final score = prefs.getInt('score') ?? 0;
     prefs.setInt('score', score + point);
   }
 }
