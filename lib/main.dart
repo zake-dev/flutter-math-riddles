@@ -11,6 +11,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   final darkModeOn = await DB.getTheme();
+  await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
 
   runApp(
     ChangeNotifierProvider<ThemeNotifier>(
