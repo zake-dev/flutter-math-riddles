@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:math_riddles/utils/connectivity.dart' as NetworkConnection;
+import 'package:math_riddles/utils/size_config.dart';
 
 class RankingPage extends StatefulWidget {
   @override
@@ -36,15 +37,18 @@ class _RankingPageState extends State<RankingPage> {
       mainAxisSize: MainAxisSize.min,
       children: [
         Container(
-          margin: EdgeInsets.only(bottom: 15),
-          child: Icon(MdiIcons.exclamationThick, size: 35),
+          margin: EdgeInsets.only(bottom: SizeConfig.safeBlockHorizontal * 3),
+          child: Icon(
+            MdiIcons.exclamationThick,
+            size: SizeConfig.safeBlockHorizontal * 10,
+          ),
         ),
         Text(
           'Sorry, Internet connection lost.',
           textAlign: TextAlign.center,
           style: TextStyle(
             fontFamily: 'Montserrat',
-            fontSize: 15,
+            fontSize: SizeConfig.safeBlockHorizontal * 4.5,
             fontWeight: FontWeight.w400,
           ),
         ),
@@ -53,11 +57,10 @@ class _RankingPageState extends State<RankingPage> {
           textAlign: TextAlign.center,
           style: TextStyle(
             fontFamily: 'Montserrat',
-            fontSize: 15,
+            fontSize: SizeConfig.safeBlockHorizontal * 4.5,
             fontWeight: FontWeight.w400,
           ),
         ),
-        SizedBox(height: 3),
       ],
     );
   }

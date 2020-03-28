@@ -27,10 +27,6 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final themeNotifier = Provider.of<ThemeNotifier>(context);
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-      statusBarColor: Colors.transparent,
-      statusBarIconBrightness: themeNotifier.getTheme().accentColorBrightness,
-    ));
     return AppBuilder(
       builder: (context) => MaterialApp(
         title: 'Math Riddles - Infinite Math Challenges, Puzzles, Riddles',

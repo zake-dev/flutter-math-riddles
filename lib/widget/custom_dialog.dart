@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:math_riddles/utils/size_config.dart';
 
 class CustomDialog extends StatelessWidget {
   final String title;
@@ -23,7 +24,7 @@ class CustomDialog extends StatelessWidget {
           ),
           child: Dialog(
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(this.padding),
+              borderRadius: BorderRadius.circular(15),
             ),
             elevation: 0,
             backgroundColor: Colors.transparent,
@@ -40,7 +41,7 @@ class CustomDialog extends StatelessWidget {
         color: Theme.of(context).backgroundColor,
         border: Border.all(
           color: Theme.of(context).accentColor,
-          width: 2.2,
+          width: SizeConfig.safeBlockHorizontal * 0.2,
         ),
         borderRadius: BorderRadius.circular(15.0),
       ),
@@ -55,14 +56,14 @@ class CustomDialog extends StatelessWidget {
               style: TextStyle(
                 decoration: TextDecoration.none,
                 fontFamily: 'Montserrat',
-                fontSize: 25,
+                fontSize: SizeConfig.safeBlockHorizontal * 7,
                 fontWeight: FontWeight.w500,
                 color: Theme.of(context).accentColor,
               ),
             ),
           ),
           Container(
-            padding: EdgeInsets.only(left: 25, right: 25, bottom: 25),
+            padding: EdgeInsets.all(SizeConfig.safeBlockHorizontal * 3),
             child: Column(
               children: this.contents,
             ),

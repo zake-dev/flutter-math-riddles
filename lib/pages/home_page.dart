@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:math_riddles/pages/Init.dart' as Init;
+import 'package:math_riddles/utils/size_config.dart';
 import 'package:math_riddles/widget/gamestart_button.dart';
 import 'package:math_riddles/widget/myrank_button.dart';
 import 'package:math_riddles/widget/ranking_button.dart';
@@ -58,7 +59,7 @@ class _BackGround extends Container {
         decoration: TextDecoration.none,
         fontFamily: 'Montserrat',
         fontWeight: FontWeight.w300,
-        fontSize: 100,
+        fontSize: SizeConfig.safeBlockHorizontal * 24,
         color: Theme.of(context).accentColor,
       ),
     );
@@ -68,8 +69,8 @@ class _BackGround extends Container {
 class _MainMenu extends Container {
   _MainMenu(BuildContext context)
       : super(
-          width: 250,
-          height: 400,
+          width: SizeConfig.safeBlockHorizontal * 60,
+          height: SizeConfig.safeBlockVertical * 50,
           decoration: BoxDecoration(
             color: Colors.transparent,
           ),
@@ -79,7 +80,6 @@ class _MainMenu extends Container {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               _buildTitle(context),
-              // _buildScoreboard(context),
               GameButton(),
               _buildButtons(context),
             ],
@@ -91,8 +91,10 @@ class _MainMenu extends Container {
         future: DB.getUsername(),
         builder: (context, snapshot) {
           final username = snapshot.hasData ? snapshot.data : 'New User';
-          final nameFontSize =
-              (username.length < 8) ? 35.0 : 35.0 - 1 * (username.length - 8);
+          final fontSize = (username.length < 8)
+              ? SizeConfig.safeBlockHorizontal * 10
+              : SizeConfig.safeBlockHorizontal * 10 -
+                  SizeConfig.safeBlockHorizontal * 0.6 * (username.length - 8);
 
           return Column(
             mainAxisSize: MainAxisSize.min,
@@ -105,7 +107,7 @@ class _MainMenu extends Container {
                   color: Theme.of(context).accentColor,
                   fontFamily: 'Monserrat',
                   fontWeight: FontWeight.w200,
-                  fontSize: 35,
+                  fontSize: fontSize,
                 ),
               ),
               Text(
@@ -115,7 +117,7 @@ class _MainMenu extends Container {
                   color: Theme.of(context).accentColor,
                   fontFamily: 'Monserrat',
                   fontWeight: FontWeight.bold,
-                  fontSize: nameFontSize,
+                  fontSize: fontSize,
                 ),
               ),
             ],
@@ -131,7 +133,7 @@ class _MainMenu extends Container {
     ];
 
     return Container(
-      padding: EdgeInsets.only(top: 8.0),
+      padding: EdgeInsets.only(top: SizeConfig.safeBlockVertical * 1),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,

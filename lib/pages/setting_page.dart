@@ -7,6 +7,7 @@ import 'package:day_night_switch/day_night_switch.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:math_riddles/utils/database.dart';
+import 'package:math_riddles/utils/size_config.dart';
 import 'package:math_riddles/widget/custom_dialog.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -22,24 +23,25 @@ class _SettingsPageState extends State<SettingsPage> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 260,
-      height: 150,
+      width: SizeConfig.safeBlockHorizontal * 75,
+      height: SizeConfig.safeBlockVertical * 20,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         mainAxisSize: MainAxisSize.max,
-        children: <Widget>[
+        children: [
           _buildSettingTitle(
             context,
             'Settings',
-            size: 25,
+            size: SizeConfig.safeBlockHorizontal * 6.7,
             fontWeight: FontWeight.w400,
-            marginRight: 20,
+            marginRight: SizeConfig.safeBlockHorizontal * 3,
           ),
           Expanded(
             child: Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                _buildSettingTitle(context, 'Select Theme'),
+                _buildSettingTitle(context, 'Select Theme',
+                    size: SizeConfig.safeBlockHorizontal * 5, marginRight: 0),
                 _buildSwitch(),
               ],
             ),
@@ -53,9 +55,9 @@ class _SettingsPageState extends State<SettingsPage> {
   Widget _buildSettingTitle(
     BuildContext context,
     String title, {
-    double size = 18.0,
+    double size,
     FontWeight fontWeight = FontWeight.w200,
-    double marginRight = 0,
+    double marginRight,
   }) {
     return Container(
       margin: EdgeInsets.only(right: marginRight),
@@ -77,7 +79,7 @@ class _SettingsPageState extends State<SettingsPage> {
     _darkTheme = (themeNotifier.getTheme() == darkTheme);
     return Container(
       child: Transform.scale(
-        scale: 0.37,
+        scale: SizeConfig.safeBlockHorizontal * 0.01 * 8,
         child: DayNightSwitch(
           value: _darkTheme,
           onChanged: (val) {
@@ -101,18 +103,20 @@ class _SettingsPageState extends State<SettingsPage> {
 
   Widget _buildResetButton() {
     return Container(
-      margin: EdgeInsets.only(right: 20),
+      margin: EdgeInsets.only(right: SizeConfig.safeBlockHorizontal * 3),
       child: RaisedButton(
         color: Theme.of(context).primaryColor,
         shape: RoundedRectangleBorder(
-          side: BorderSide(color: Theme.of(context).accentColor, width: 1.3),
+          side: BorderSide(
+              color: Theme.of(context).accentColor,
+              width: SizeConfig.safeBlockHorizontal * 0.2),
           borderRadius: BorderRadius.circular(8),
         ),
         child: Text(
           'Reset',
           style: TextStyle(
             fontFamily: 'Montserrat',
-            fontSize: 14,
+            fontSize: SizeConfig.safeBlockHorizontal * 4.5,
             fontWeight: FontWeight.w600,
           ),
         ),
@@ -127,18 +131,18 @@ class _SettingsPageState extends State<SettingsPage> {
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontFamily: 'Montserrat',
-                    fontSize: 15,
+                    fontSize: SizeConfig.safeBlockHorizontal * 4.5,
                     fontWeight: FontWeight.w300,
                   ),
                 ),
                 SizedBox(
-                  height: 15,
+                  height: SizeConfig.safeBlockVertical * 1,
                 ),
                 Text(
                   '**Application will be closed for the safety.**',
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    fontSize: 12,
+                    fontSize: SizeConfig.safeBlockHorizontal * 3.7,
                     fontWeight: FontWeight.w600,
                     color: Colors.redAccent.shade700,
                   ),
@@ -146,7 +150,9 @@ class _SettingsPageState extends State<SettingsPage> {
               ],
               buttons: [
                 FlatButton(
-                    child: Text('Yes'),
+                    child: Text('Yes',
+                        style: TextStyle(
+                            fontSize: SizeConfig.safeBlockHorizontal * 5)),
                     onPressed: () async {
                       await DB.deleteCurrentUser();
                       SystemChannels.platform
@@ -154,7 +160,9 @@ class _SettingsPageState extends State<SettingsPage> {
                       exit(0);
                     }),
                 FlatButton(
-                  child: Text('No'),
+                  child: Text('No',
+                      style: TextStyle(
+                          fontSize: SizeConfig.safeBlockHorizontal * 5)),
                   onPressed: () => Navigator.pop(context),
                 )
               ],

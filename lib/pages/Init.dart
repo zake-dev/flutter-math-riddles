@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:math_riddles/utils/size_config.dart';
 import 'package:math_riddles/widget/app_builder.dart';
 import 'package:math_riddles/widget/custom_dialog.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -24,7 +25,7 @@ Future<void> init(context) async {
               style: TextStyle(
                 decoration: TextDecoration.none,
                 fontFamily: 'Montserrat',
-                fontSize: 18,
+                fontSize: SizeConfig.safeBlockHorizontal * 4,
                 fontWeight: FontWeight.w300,
                 color: Theme.of(context).accentColor,
               ),

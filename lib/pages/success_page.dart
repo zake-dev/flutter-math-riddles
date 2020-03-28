@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:math_riddles/utils/database.dart';
+import 'package:math_riddles/utils/size_config.dart';
 
 class SuccessPage extends StatefulWidget {
   @override
@@ -23,33 +25,41 @@ class _SuccessPageState extends State<SuccessPage> {
         return Column(
           mainAxisAlignment: MainAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Text(
-              'You are now at,',
+              'Correct!',
               style: TextStyle(
                 decoration: TextDecoration.none,
                 color: Theme.of(context).accentColor,
                 fontFamily: 'Monserrat',
-                fontWeight: FontWeight.w200,
-                fontSize: 30,
+                fontWeight: FontWeight.w500,
+                fontSize: SizeConfig.safeBlockHorizontal * 7,
               ),
             ),
-            SizedBox(
-              height: 3,
-            ),
-            Text(
-              '${snapshot.data} pts',
-              textAlign: TextAlign.end,
-              style: TextStyle(
-                decoration: TextDecoration.none,
-                color: Theme.of(context).accentColor,
-                fontFamily: 'Monserrat',
-                fontWeight: FontWeight.bold,
-                fontSize: 35,
+            SizedBox(height: SizeConfig.safeBlockVertical * 1),
+            Icon(MdiIcons.checkCircle,
+                size: SizeConfig.safeBlockHorizontal * 15),
+            SizedBox(height: SizeConfig.safeBlockVertical * 2),
+            RichText(
+              text: TextSpan(
+                text: 'You are now at,',
+                style: TextStyle(
+                  decoration: TextDecoration.none,
+                  color: Theme.of(context).accentColor,
+                  fontFamily: 'Monserrat',
+                  fontWeight: FontWeight.w200,
+                  fontSize: SizeConfig.safeBlockHorizontal * 5,
+                ),
+                children: [
+                  TextSpan(
+                    text: ' ${snapshot.data}',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  TextSpan(text: ' points'),
+                ],
               ),
             ),
-            SizedBox(height: 3),
           ],
         );
       },

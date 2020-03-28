@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:math_riddles/utils/connectivity.dart' as NetworkConnection;
@@ -98,5 +100,15 @@ class DB {
 
     // Clear Database
     await firestore.collection('users').document(deviceID).delete();
+  }
+
+  static Future<Map<String, dynamic>> getRandomPuzzle() async {
+    final databaseInfo =
+        await firestore.collection('admin').document('databaseInfo').get();
+    final puzzlesCount = databaseInfo.data['puzzlesCount'];
+    final targetDocID = Random().nextInt(puzzlesCount) + 1;
+    final targetDoc =
+        await firestore.collection('puzzles').document('$targetDocID').get();
+    return targetDoc.data;
   }
 }

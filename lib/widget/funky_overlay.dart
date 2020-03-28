@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:math_riddles/utils/size_config.dart';
 
 class FunkyOverlay extends StatefulWidget {
   final widgets;
@@ -46,7 +47,7 @@ class _FunkyOverlayState extends State<FunkyOverlay>
                 shape: RoundedRectangleBorder(
                     side: BorderSide(
                       color: Theme.of(context).accentColor,
-                      width: 2.2,
+                      width: SizeConfig.safeBlockHorizontal * 0.5,
                     ),
                     borderRadius: BorderRadius.circular(15.0))),
             child: Column(

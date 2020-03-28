@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:math_riddles/utils/database.dart';
+import 'package:math_riddles/utils/size_config.dart';
 
 class MyPage extends StatefulWidget {
   @override
@@ -24,7 +25,7 @@ class _MyPageState extends State<MyPage> {
           final String username = snapshot.data[1];
 
           return Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
@@ -35,11 +36,8 @@ class _MyPageState extends State<MyPage> {
                   color: Theme.of(context).accentColor,
                   fontFamily: 'Monserrat',
                   fontWeight: FontWeight.w200,
-                  fontSize: 20,
+                  fontSize: SizeConfig.safeBlockHorizontal * 6.3,
                 ),
-              ),
-              SizedBox(
-                height: 3,
               ),
               Text(
                 '$username',
@@ -49,10 +47,10 @@ class _MyPageState extends State<MyPage> {
                   color: Theme.of(context).accentColor,
                   fontFamily: 'Monserrat',
                   fontWeight: FontWeight.bold,
-                  fontSize: 25,
+                  fontSize: SizeConfig.safeBlockHorizontal * 7,
                 ),
               ),
-              SizedBox(height: 15),
+              SizedBox(height: SizeConfig.safeBlockHorizontal * 2),
               Text(
                 'Your Score',
                 style: TextStyle(
@@ -60,11 +58,8 @@ class _MyPageState extends State<MyPage> {
                   color: Theme.of(context).accentColor,
                   fontFamily: 'Monserrat',
                   fontWeight: FontWeight.w200,
-                  fontSize: 20,
+                  fontSize: SizeConfig.safeBlockHorizontal * 6.3,
                 ),
-              ),
-              SizedBox(
-                height: 3,
               ),
               Text(
                 '$score pts',
@@ -74,7 +69,7 @@ class _MyPageState extends State<MyPage> {
                   color: Theme.of(context).accentColor,
                   fontFamily: 'Monserrat',
                   fontWeight: FontWeight.bold,
-                  fontSize: 25,
+                  fontSize: SizeConfig.safeBlockHorizontal * 7,
                 ),
               ),
             ],

@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:math_riddles/pages/home_page.dart';
 import 'package:math_riddles/utils/connectivity.dart' as NetworkConnection;
 import 'package:math_riddles/utils/database.dart';
+import 'package:math_riddles/utils/size_config.dart';
 
 class Splashscreen extends StatefulWidget {
   @override
@@ -22,6 +23,7 @@ class _SplashscreenState extends State<Splashscreen> {
 
   @override
   Widget build(BuildContext conetxt) {
+    SizeConfig().init(context);
     Timer(
       Duration(seconds: 3),
       () => Navigator.of(context).pushReplacement(MaterialPageRoute(
@@ -31,7 +33,7 @@ class _SplashscreenState extends State<Splashscreen> {
 
     final image = new Image(
       image: AssetImage('lib/assets/images/Math.png'),
-      height: 300,
+      height: SizeConfig.safeBlockHorizontal * 60,
     );
 
     return Container(

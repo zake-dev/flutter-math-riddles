@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:math_riddles/pages/game_page.dart';
 import 'package:math_riddles/utils/database.dart';
+import 'package:math_riddles/utils/size_config.dart';
 import 'package:math_riddles/widget/slide_route.dart';
 
 class GameButton extends StatefulWidget {
@@ -20,9 +21,10 @@ class _GameButtonState extends State<GameButton> {
             ? 'New Game'
             : 'Continue';
         return Container(
-          width: 220,
-          height: 50,
-          margin: EdgeInsets.symmetric(vertical: 15),
+          width: SizeConfig.safeBlockHorizontal * 62,
+          height: SizeConfig.safeBlockVertical * 7,
+          margin: EdgeInsets.symmetric(
+              vertical: SizeConfig.safeBlockVertical * 0.8),
           child: RaisedButton(
             color: Theme.of(context).accentColor,
             child: Text(
@@ -30,7 +32,7 @@ class _GameButtonState extends State<GameButton> {
               style: TextStyle(
                 decoration: TextDecoration.none,
                 fontFamily: 'Montserrat',
-                fontSize: 28,
+                fontSize: SizeConfig.safeBlockHorizontal * 8,
                 fontWeight: FontWeight.w700,
                 letterSpacing: -2,
                 color: Theme.of(context).primaryColor,
