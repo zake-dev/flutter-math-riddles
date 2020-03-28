@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:math_riddles/pages/Init.dart' as Init;
-import 'package:math_riddles/pages/gamestart_button.dart';
-import 'package:math_riddles/pages/ranking_button.dart';
-import 'package:math_riddles/pages/setting_button.dart';
+import 'package:math_riddles/widget/gamestart_button.dart';
+import 'package:math_riddles/widget/myrank_button.dart';
+import 'package:math_riddles/widget/ranking_button.dart';
+import 'package:math_riddles/widget/setting_button.dart';
 import 'package:math_riddles/utils/database.dart';
 
 class HomePage extends StatefulWidget {
@@ -78,8 +79,8 @@ class _MainMenu extends Container {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               _buildTitle(context),
+              // _buildScoreboard(context),
               GameButton(),
-              _buildScoreboard(context),
               _buildButtons(context),
             ],
           ),
@@ -122,50 +123,9 @@ class _MainMenu extends Container {
         });
   }
 
-  static Widget _buildScoreboard(context) {
-    return FutureBuilder(
-      future: DB.getScore(),
-      builder: (context, snapshot) {
-        final int score = snapshot.hasData ? snapshot.data : 0;
-
-        return Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'You are now at,',
-              style: TextStyle(
-                decoration: TextDecoration.none,
-                color: Theme.of(context).accentColor,
-                fontFamily: 'Monserrat',
-                fontWeight: FontWeight.w200,
-                fontSize: 30,
-              ),
-            ),
-            SizedBox(
-              height: 3,
-            ),
-            Text(
-              '$score pts',
-              textAlign: TextAlign.end,
-              style: TextStyle(
-                decoration: TextDecoration.none,
-                color: Theme.of(context).accentColor,
-                fontFamily: 'Monserrat',
-                fontWeight: FontWeight.bold,
-                fontSize: 35,
-              ),
-            ),
-            SizedBox(height: 3),
-          ],
-        );
-      },
-    );
-  }
-
   static Widget _buildButtons(context) {
     final buttons = [
+      MyRankButton(context),
       RankingButton(context),
       SettingButton(context),
     ];

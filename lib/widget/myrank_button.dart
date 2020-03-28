@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:math_riddles/pages/my_page.dart';
 import 'package:math_riddles/widget/funky_overlay.dart';
 
 class MyRankButton extends Container {
@@ -34,8 +35,8 @@ class MyRankButton extends Container {
   static List<Widget> _buildPage() {
     return [
       Padding(
-        padding: const EdgeInsets.all(100.0),
-        child: Text("MyRank will be shown here."),
+        padding: const EdgeInsets.all(30.0),
+        child: MyPage(),
       ),
     ];
   }

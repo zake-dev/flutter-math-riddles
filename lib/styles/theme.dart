@@ -17,7 +17,7 @@ final darkTheme = ThemeData(
 final lightTheme = ThemeData(
   primarySwatch: Colors.grey,
   primaryColor: const Color(0xFFFFFDF7),
-  primaryColorDark: const Color(0xFFFFFDDB),
+  primaryColorDark: const Color(0xFFFFFDEB),
   brightness: Brightness.light,
   accentColorBrightness: Brightness.dark,
   backgroundColor: const Color(0xFFFFFDF7),
