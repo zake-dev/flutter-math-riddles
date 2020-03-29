@@ -19,10 +19,11 @@ class DB {
     }
 
     final timestamp = DateTime.now().toIso8601String();
-    final username = prefs.getString('username');
     final score = prefs.getInt('score') ?? 0;
-    firestore.collection('users').document(deviceID).updateData(
-        {'username': username, 'score': score, 'last_login': timestamp});
+    firestore
+        .collection('users')
+        .document(deviceID)
+        .updateData({'score': score, 'last_login': timestamp});
   }
 
   static Future<void> fetchData(String deviceID) async {
@@ -110,5 +111,16 @@ class DB {
     final targetDoc =
         await firestore.collection('puzzles').document('$targetDocID').get();
     return targetDoc.data;
+  }
+
+  static Future<List<Map<String, dynamic>>> getRankers() async {
+    List<Map<String, dynamic>> rankers = [];
+    final snapshot = await firestore
+        .collection('users')
+        .orderBy('score', descending: true)
+        .limit(50)
+        .getDocuments();
+    snapshot.documents.forEach((p) => rankers.add(p.data));
+    return rankers;
   }
 }
