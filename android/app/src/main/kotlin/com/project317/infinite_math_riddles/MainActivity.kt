@@ -1,4 +1,4 @@
-package com.example.math_riddles
+package com.project317.infinite_math_riddles
 
 import androidx.annotation.NonNull;
 import io.flutter.embedding.android.FlutterActivity

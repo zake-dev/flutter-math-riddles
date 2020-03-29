@@ -113,6 +113,11 @@ class DB {
     return targetDoc.data;
   }
 
+  static Future<Map<String, dynamic>> getPuzzle(String id) async {
+    final targetDoc = await firestore.collection('puzzles').document(id).get();
+    return targetDoc.data;
+  }
+
   static Future<List<Map<String, dynamic>>> getRankers() async {
     List<Map<String, dynamic>> rankers = [];
     final snapshot = await firestore

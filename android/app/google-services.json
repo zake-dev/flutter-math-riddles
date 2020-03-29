@@ -8,9 +8,9 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:690682162291:android:d07389f1d42360c790ce06",
+        "mobilesdk_app_id": "1:690682162291:android:5903a0410659233190ce06",
         "android_client_info": {
-          "package_name": "com.example.math_riddles"
+          "package_name": "com.project317.infinite_math_riddles"
         }
       },
       "oauth_client": [

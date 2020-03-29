@@ -68,6 +68,7 @@ class _GamePageState extends State<GamePage> {
 
   _getPuzzle() async {
     final _puzzle = DB.getRandomPuzzle();
+    // final _puzzle = DB.getPuzzle('199');
     setState(() {
       puzzle = _puzzle;
       hintShowed = false;
