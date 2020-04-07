@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:device_info/device_info.dart';
+import 'package:facebook_audience_network/facebook_audience_network.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:math_riddles/pages/home_page.dart';
@@ -19,6 +20,9 @@ class _SplashscreenState extends State<Splashscreen> {
     super.initState();
     NetworkConnection.initCheck(context);
     init();
+    FacebookAudienceNetwork.init(
+      testingId: "37b1da9d-b48c-4103-a393-2e095e734bd6",
+    );
   }
 
   @override
@@ -45,8 +49,8 @@ class _SplashscreenState extends State<Splashscreen> {
   }
 
   void init() async {
-    final androidInfo = await DeviceInfoPlugin().androidInfo;
-    final deviceID = androidInfo.androidId;
+    final deviceInfo = await DeviceInfoPlugin().androidInfo;
+    final deviceID = deviceInfo.androidId;
     await DB.updateUser(deviceID);
     await DB.fetchData(deviceID);
   }

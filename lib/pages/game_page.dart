@@ -1,8 +1,8 @@
 import 'dart:async';
 
+import 'package:facebook_audience_network/ad/ad_rewarded.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_admob/firebase_admob.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:math_riddles/models/multiline_puzzle.dart';
 import 'package:math_riddles/models/oneline_puzzle.dart';
@@ -26,49 +26,14 @@ class _GamePageState extends State<GamePage> {
   List<dynamic> workout;
   int point;
 
-  MobileAdTargetingInfo targetingInfo;
-
   @override
   initState() {
     super.initState();
     _getPuzzle();
-
-    // FirebaseAdMob.instance
-    // .initialize(appId: 'ca-app-pub-4601910868715683~741074956');
-    FirebaseAdMob.instance.initialize(appId: FirebaseAdMob.testAppId);
-    targetingInfo = MobileAdTargetingInfo(
-      testDevices: [],
-      nonPersonalizedAds: true,
-      keywords: <String>['Math', 'Puzzle'],
-    );
-    RewardedVideoAd.instance.load(
-      adUnitId: RewardedVideoAd.testAdUnitId,
-      // adUnitId: 'ca-app-pub-4601910868715683/1053031255',
-      targetingInfo: targetingInfo,
-    );
-    RewardedVideoAd.instance.listener =
-        (RewardedVideoAdEvent event, {String rewardType, int rewardAmount}) {
-      RewardedVideoAd.instance.load(
-        adUnitId: RewardedVideoAd.testAdUnitId,
-        // adUnitId: 'ca-app-pub-4601910868715683/1053031255',
-        targetingInfo: targetingInfo,
-      );
-      if (event == RewardedVideoAdEvent.rewarded) {
-        if (!hintShowed) {
-          Navigator.of(context).pop();
-          showHint();
-          hintShowed = true;
-        } else if (hintShowed) {
-          Navigator.of(context).pop();
-          showWorkout();
-        }
-      }
-    };
   }
 
   _getPuzzle() async {
     final _puzzle = DB.getRandomPuzzle();
-    // final _puzzle = DB.getPuzzle('199');
     setState(() {
       puzzle = _puzzle;
       hintShowed = false;
@@ -477,9 +442,21 @@ class _GamePageState extends State<GamePage> {
                   ),
                   onPressed: () async {
                     hintShowed = false;
-                    await RewardedVideoAd.instance
-                        .show()
-                        .catchError((e) => _showAdFailed());
+                    FacebookRewardedVideoAd.loadRewardedVideoAd(
+                      placementId: "710644546346434_710647189679503",
+                      listener: (result, value) {
+                        if (result == RewardedVideoAdResult.LOADED)
+                          FacebookRewardedVideoAd.showRewardedVideoAd();
+                        if (result == RewardedVideoAdResult.VIDEO_COMPLETE) {
+                          hintShowed = true;
+                          Navigator.of(context).pop();
+                          showHint();
+                        }
+                        if (result == RewardedVideoAdResult.ERROR) {
+                          _showAdFailed();
+                        }
+                      },
+                    );
                   },
                 ),
                 RaisedButton(
@@ -496,9 +473,20 @@ class _GamePageState extends State<GamePage> {
                     if (!hintShowed) {
                       _showHintFirst();
                     } else {
-                      await RewardedVideoAd.instance
-                          .show()
-                          .catchError((e) => _showAdFailed());
+                      FacebookRewardedVideoAd.loadRewardedVideoAd(
+                        placementId: "710644546346434_710647189679503",
+                        listener: (result, value) {
+                          if (result == RewardedVideoAdResult.LOADED)
+                            FacebookRewardedVideoAd.showRewardedVideoAd();
+                          if (result == RewardedVideoAdResult.VIDEO_COMPLETE) {
+                            Navigator.of(context).pop();
+                            showWorkout();
+                          }
+                          if (result == RewardedVideoAdResult.ERROR) {
+                            _showAdFailed();
+                          }
+                        },
+                      );
                     }
                   },
                 )
