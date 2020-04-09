@@ -6,6 +6,7 @@ import 'package:math_riddles/widget/myrank_button.dart';
 import 'package:math_riddles/widget/ranking_button.dart';
 import 'package:math_riddles/widget/setting_button.dart';
 import 'package:math_riddles/utils/database.dart';
+import 'package:rate_my_app/rate_my_app.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -13,6 +14,12 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  @override
+  initState() {
+    super.initState();
+    initRate();
+  }
+
   @override
   Widget build(BuildContext context) {
     Init.init(context);
@@ -28,6 +35,34 @@ class _HomePageState extends State<HomePage> {
         ],
       ),
     );
+  }
+
+  void initRate() {
+    RateMyApp rateMyApp = RateMyApp(
+      preferencesPrefix: 'rateMyApp_',
+      minDays: 0,
+      minLaunches: 5,
+      remindDays: 4,
+      remindLaunches: 10,
+      googlePlayIdentifier: 'com.project317.infinite_math_riddles',
+    );
+
+    rateMyApp.init().then((_) {
+      if (rateMyApp.shouldOpenDialog) {
+        rateMyApp.showRateDialog(
+          context,
+          title: 'Rate this App please!', // The dialog title.
+          message:
+              'If you like this app, please take a little bit of your time to review it !\nIt really helps us and it shouldn\'t take you more than one minute.', // The dialog message.
+          rateButton: 'RATE', // The dialog "rate" button text.
+          noButton: 'NO THANKS', // The dialog "no" button text.
+          laterButton: 'MAYBE LATER', // The dialog "later" button text.
+          dialogStyle: DialogStyle(), // Custom dialog styles.
+          onDismissed: () =>
+              rateMyApp.callEvent(RateMyAppEventType.laterButtonPressed),
+        );
+      }
+    });
   }
 }
 
