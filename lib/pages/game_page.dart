@@ -9,6 +9,7 @@ import 'package:math_riddles/models/oneline_puzzle.dart';
 import 'package:math_riddles/pages/success_page.dart';
 import 'package:math_riddles/utils/database.dart';
 import 'package:math_riddles/utils/size_config.dart';
+import 'package:math_riddles/utils/puzzle_builder.dart' as PuzzleBuilder;
 import 'package:math_riddles/widget/funky_overlay.dart';
 import 'package:math_riddles/widget/setting_button.dart';
 
@@ -32,8 +33,9 @@ class _GamePageState extends State<GamePage> {
     _getPuzzle();
   }
 
-  _getPuzzle() async {
-    final _puzzle = DB.getRandomPuzzle();
+  _getPuzzle() {
+    // final _puzzle = DB.getRandomPuzzle();
+    final _puzzle = PuzzleBuilder.getRandomPuzzle();
     setState(() {
       puzzle = _puzzle;
       hintShowed = false;
@@ -110,15 +112,19 @@ class _GamePageState extends State<GamePage> {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return CircularProgressIndicator();
           }
+
+          // Select puzzle screen widget based on puzzle type
           final puzzleData = snapshot.data;
           _setPuzzleData(puzzleData);
-
-          // Choose Puzzle Type
-          final puzzleContainer = (type == 'oneLine')
-              ? OneLinePuzzle(puzzleData)
-              : (type == 'multiLine')
-                  ? MultiLinePuzzle(puzzleData)
-                  : Text('Not found');
+          Widget puzzleContainer;
+          switch (type) {
+            case 'oneLine':
+              puzzleContainer = OneLinePuzzle(puzzleData);
+              break;
+            case 'multiLine':
+              puzzleContainer = MultiLinePuzzle(puzzleData);
+              break;
+          }
 
           return Container(
             decoration: BoxDecoration(
