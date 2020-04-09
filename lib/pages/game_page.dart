@@ -100,6 +100,51 @@ class _GamePageState extends State<GamePage> {
               },
             ),
           ),
+          FutureBuilder(
+            future: Future.wait([DB.getUsername(), DB.getScore()])
+                .then((response) => [response[0], response[1]]),
+            builder: (context, AsyncSnapshot<List> snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting)
+                return CircularProgressIndicator();
+
+              final username = snapshot.data[0];
+              final score = snapshot.data[1];
+              Color pointColor;
+              if (score < 500)
+                pointColor = Colors.white;
+              else if (score < 1000)
+                pointColor = Colors.orange.shade200;
+              else if (score < 2500)
+                pointColor = Colors.green.shade300;
+              else if (score < 5000)
+                pointColor = Colors.blue.shade300;
+              else if (score < 10000)
+                pointColor = Colors.purple.shade200;
+              else
+                pointColor = Colors.red.shade400;
+
+              return Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text(
+                    '$username',
+                    style: TextStyle(
+                        fontFamily: 'Montserrat',
+                        fontSize: SizeConfig.safeBlockVertical * 1.5),
+                  ),
+                  Text(
+                    '$score',
+                    style: TextStyle(
+                        fontFamily: 'Montserrat',
+                        fontWeight: FontWeight.w500,
+                        fontSize: SizeConfig.safeBlockVertical * 3,
+                        color: pointColor),
+                  ),
+                ],
+              );
+            },
+          ),
           SettingButton(context),
         ],
       ),
@@ -467,7 +512,8 @@ class _GamePageState extends State<GamePage> {
                           showHint();
                         }
                         if (result == RewardedVideoAdResult.ERROR) {
-                          _showAdFailed();
+                          Navigator.of(context).pop();
+                          _showAdFailed('hint');
                         }
                       },
                     );
@@ -497,7 +543,8 @@ class _GamePageState extends State<GamePage> {
                             showWorkout();
                           }
                           if (result == RewardedVideoAdResult.ERROR) {
-                            _showAdFailed();
+                            Navigator.of(context).pop();
+                            _showAdFailed('solution');
                           }
                         },
                       );
@@ -512,21 +559,94 @@ class _GamePageState extends State<GamePage> {
     );
   }
 
-  void _showAdFailed() {
-    Timer(Duration(seconds: 1), () => Navigator.of(context).pop());
+  void _showAdFailed(rewardType) {
+    final int cost = (rewardType == 'hint') ? 5 : 10;
+
     showDialog(
       context: context,
-      builder: (_) => Dialog(
-        backgroundColor: Colors.transparent,
-        child: Center(
-          child: Text(
-            'No ads available now.',
-            style: TextStyle(
-              fontSize: SizeConfig.safeBlockVertical * 2,
-              color: Colors.white,
+      builder: (_) => FunkyOverlay(
+        [
+          Padding(
+            padding: EdgeInsets.all(SizeConfig.safeBlockHorizontal * 6),
+            child: Container(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text('No Ads Available Now',
+                      style: TextStyle(
+                          fontSize: SizeConfig.safeBlockHorizontal * 5.5)),
+                  SizedBox(
+                    height: SizeConfig.safeBlockVertical * 12,
+                    width: SizeConfig.safeBlockHorizontal * 12,
+                    child: Icon(MdiIcons.alert,
+                        size: SizeConfig.safeBlockVertical * 7),
+                  ),
+                  SizedBox(
+                    width: SizeConfig.safeBlockHorizontal * 50,
+                    child: RichText(
+                      textAlign: TextAlign.center,
+                      text: TextSpan(
+                        text:
+                            'There is no ads available at the moment. Do you want to use ',
+                        style: TextStyle(
+                            fontSize: SizeConfig.safeBlockHorizontal * 4,
+                            fontWeight: FontWeight.w300),
+                        children: [
+                          TextSpan(
+                              text: ' $cost points ',
+                              style: TextStyle(
+                                  color: Colors.red.shade700,
+                                  fontWeight: FontWeight.w600)),
+                          TextSpan(text: 'instead of?')
+                        ],
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: SizeConfig.safeBlockVertical * 1.5),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      RaisedButton(
+                        child: Text('YES',
+                            style: TextStyle(
+                                fontSize: SizeConfig.safeBlockHorizontal * 3)),
+                        shape: RoundedRectangleBorder(
+                            side: BorderSide(
+                                color: Theme.of(context).accentColor,
+                                width: SizeConfig.safeBlockVertical * 0.2),
+                            borderRadius: BorderRadius.circular(25)),
+                        color: Theme.of(context).primaryColor,
+                        onPressed: () {
+                          hintShowed = true;
+                          setState(() {
+                            DB.addScore(-cost);
+                          });
+                          Navigator.of(context).pop();
+                          (cost < 6) ? showHint() : showWorkout();
+                        },
+                      ),
+                      SizedBox(width: SizeConfig.safeBlockHorizontal * 3),
+                      RaisedButton(
+                        child: Text('NO',
+                            style: TextStyle(
+                                fontSize: SizeConfig.safeBlockHorizontal * 3)),
+                        shape: RoundedRectangleBorder(
+                            side: BorderSide(
+                                color: Theme.of(context).accentColor,
+                                width: SizeConfig.safeBlockVertical * 0.2),
+                            borderRadius: BorderRadius.circular(25)),
+                        color: Theme.of(context).primaryColor,
+                        onPressed: () => Navigator.of(context).pop(),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
-        ),
+        ],
       ),
     );
   }

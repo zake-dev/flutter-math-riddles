@@ -88,7 +88,9 @@ class DB {
   static void addScore(int point) async {
     final prefs = await SharedPreferences.getInstance();
     final score = prefs.getInt('score') ?? 0;
-    final newScore = (score + point <= 1000000) ? score + point : 1000000;
+    final newScore = (score + point < 0)
+        ? 0
+        : (score + point <= 1000000) ? score + point : 1000000;
     prefs.setInt('score', newScore);
   }
 
