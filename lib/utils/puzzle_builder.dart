@@ -1,6 +1,6 @@
 import 'dart:math';
 
-const PUZZLE_COUNT = 140;
+const PUZZLE_COUNT = 300;
 
 Future<Map<String, dynamic>> getRandomPuzzle() async {
   final puzzleNumber = Random().nextInt(PUZZLE_COUNT) + 1;
@@ -29,9 +29,16 @@ Future<Map<String, dynamic>> getRandomPuzzle() async {
     puzzle = await multiLineTripleAdd();
   else if (puzzleNumber <= 170)
     puzzle = await multiLineEquationHard();
-  else if (puzzleNumber <= 200) puzzle = await multiLineEquationEasy();
+  else if (puzzleNumber <= 200)
+    puzzle = await multiLineEquationEasy();
+  else if (puzzleNumber <= 240)
+    puzzle = await triangleAddSub();
+  else if (puzzleNumber <= 260)
+    puzzle = await triangleMultiply();
+  else if (puzzleNumber <= 280)
+    puzzle = await triangleDoubleAdd();
+  else if (puzzleNumber <= 300) puzzle = await triangleTripleAdd();
 
-  puzzle = await multiLineEquationEasy();
   return puzzle;
 }
 
@@ -446,6 +453,152 @@ Future<Map<String, dynamic>> multiLineEquationEasy() async {
   puzzle['workout'].add('${marks[1]} = $y');
   puzzle['workout'].add('${marks[2]} = $z');
   puzzle['workout'].add('${marks[1]} + ${marks[2]} = ${y + z}');
+
+  return puzzle;
+}
+
+Future<Map<String, dynamic>> triangleAddSub() async {
+  Map<String, dynamic> puzzle = {
+    'type': 'triangle',
+    'puzzle': <List<dynamic>>[],
+    'workout': [],
+  };
+  final random = Random();
+
+  // Puzzle Setting
+  puzzle['point'] = random.nextInt(3) + 1;
+  puzzle['hint'] = 'sum or diffrence';
+  int func(x, y) => (x + y);
+
+  // Generate random numbers
+  List numbers = [];
+  int flag = (random.nextInt(100) > 50) ? 1 : -1;
+  for (int i = 0; i < 4; i++)
+    numbers.add([random.nextInt(71) + 30, flag * (random.nextInt(30) + 1)]);
+
+  // Build Puzzle
+  List<dynamic> newPuzzle = [];
+  for (List<int> pair in numbers) {
+    pair.shuffle();
+    final a = pair[0];
+    final b = pair[1];
+    final answer = func(a, b);
+    newPuzzle.add([a, b, answer]);
+    if (a < 0 || b < 0)
+      puzzle['workout'].add('| ${a.abs()} - ${b.abs()} | = $answer');
+    else
+      puzzle['workout'].add('${a.abs()} + ${b.abs()} = $answer');
+  }
+
+  puzzle['answer'] = newPuzzle[3][2].toString();
+  puzzle['puzzle'] = newPuzzle;
+
+  return puzzle;
+}
+
+Future<Map<String, dynamic>> triangleMultiply() async {
+  Map<String, dynamic> puzzle = {
+    'type': 'triangle',
+    'puzzle': <List<dynamic>>[],
+    'workout': [],
+  };
+  final random = Random();
+
+  // Puzzle Setting
+  puzzle['point'] = random.nextInt(3) + 1;
+  puzzle['hint'] = 'a x b';
+  int func(x, y) => (x * y);
+
+  // Generate random numbers
+  List numbers = [];
+  for (int i = 0; i < 4; i++)
+    numbers.add([random.nextInt(14) + 2, random.nextInt(15) + 1]);
+
+  // Build Puzzle
+  List<dynamic> newPuzzle = [];
+  for (List<int> pair in numbers) {
+    pair.shuffle();
+    final a = pair[0];
+    final b = pair[1];
+    final answer = func(a, b);
+    newPuzzle.add([a, b, answer]);
+    puzzle['workout'].add('${a.abs()} x ${b.abs()} = $answer');
+  }
+
+  puzzle['answer'] = newPuzzle[3][2].toString();
+  puzzle['puzzle'] = newPuzzle;
+
+  return puzzle;
+}
+
+Future<Map<String, dynamic>> triangleDoubleAdd() async {
+  Map<String, dynamic> puzzle = {
+    'type': 'triangle',
+    'puzzle': <List<dynamic>>[],
+    'workout': [],
+  };
+  final random = Random();
+
+  // Puzzle Setting
+  puzzle['point'] = random.nextInt(2) + 5;
+  puzzle['hint'] = 'x2 and ...';
+  int func(x, y) => (2 * x + y);
+
+  // Generate random numbers
+  List numbers = [];
+  int flag = (random.nextInt(100) > 50) ? 1 : -1;
+  for (int i = 0; i < 4; i++)
+    numbers.add([random.nextInt(45) + 16, flag * (random.nextInt(30) + 1)]);
+
+  // Build Puzzle
+  List<dynamic> newPuzzle = [];
+  for (List<int> pair in numbers) {
+    final a = pair[0];
+    final b = pair[1];
+    final answer = func(a, b);
+    newPuzzle.add([a, b, answer]);
+    puzzle['workout']
+        .add('(${a.abs()} x 2) ${(b < 0) ? '-' : '+'} ${b.abs()} = $answer');
+  }
+
+  puzzle['answer'] = newPuzzle[3][2].toString();
+  puzzle['puzzle'] = newPuzzle;
+
+  return puzzle;
+}
+
+Future<Map<String, dynamic>> triangleTripleAdd() async {
+  Map<String, dynamic> puzzle = {
+    'type': 'triangle',
+    'puzzle': <List<dynamic>>[],
+    'workout': [],
+  };
+  final random = Random();
+
+  // Puzzle Setting
+  puzzle['point'] = random.nextInt(2) + 6;
+  puzzle['hint'] = 'x3 and ...';
+  int func(x, y) => (3 * x + y);
+
+  // Generate random numbers
+  List numbers = [];
+  int flag = (random.nextInt(100) > 50) ? 1 : -1;
+  for (int i = 0; i < 4; i++)
+    numbers.add([random.nextInt(30) + 11, flag * (random.nextInt(30) + 1)]);
+
+  // Build Puzzle
+  List<dynamic> newPuzzle = [];
+  for (List<int> pair in numbers) {
+    final a = pair[0];
+    final b = pair[1];
+    final answer = func(a, b);
+    newPuzzle.add([a, b, answer]);
+    puzzle['workout']
+        .add('(${a.abs()} x 3) ${(b < 0) ? '-' : '+'} ${b.abs()} = $answer');
+  }
+
+  puzzle['answer'] = newPuzzle[3][2].toString();
+  puzzle['puzzle'] = newPuzzle;
 
   return puzzle;
 }

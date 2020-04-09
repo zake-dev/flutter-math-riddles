@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:math_riddles/models/multiline_puzzle.dart';
 import 'package:math_riddles/models/oneline_puzzle.dart';
+import 'package:math_riddles/models/triangle_puzzle.dart';
 import 'package:math_riddles/pages/success_page.dart';
 import 'package:math_riddles/utils/database.dart';
 import 'package:math_riddles/utils/size_config.dart';
@@ -34,7 +35,6 @@ class _GamePageState extends State<GamePage> {
   }
 
   _getPuzzle() {
-    // final _puzzle = DB.getRandomPuzzle();
     final _puzzle = PuzzleBuilder.getRandomPuzzle();
     setState(() {
       puzzle = _puzzle;
@@ -123,6 +123,9 @@ class _GamePageState extends State<GamePage> {
               break;
             case 'multiLine':
               puzzleContainer = MultiLinePuzzle(puzzleData);
+              break;
+            case 'triangle':
+              puzzleContainer = TrianglePuzzle(puzzleData);
               break;
           }
 
