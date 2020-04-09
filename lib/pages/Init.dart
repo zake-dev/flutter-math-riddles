@@ -32,7 +32,7 @@ Future<void> init(context) async {
             ),
             Container(
               margin: EdgeInsets.only(
-                top: 25,
+                top: SizeConfig.safeBlockHorizontal * 5,
                 bottom: 0,
               ),
               child: TextField(
@@ -50,7 +50,7 @@ Future<void> init(context) async {
                 style: TextStyle(
                   decoration: TextDecoration.none,
                   fontFamily: 'Montserrat',
-                  fontSize: 15,
+                  fontSize: SizeConfig.safeBlockHorizontal * 4,
                   fontWeight: FontWeight.w500,
                   color: Theme.of(context).accentColor,
                 ),
@@ -59,7 +59,8 @@ Future<void> init(context) async {
           ],
           buttons: [
             Container(
-              margin: EdgeInsets.only(bottom: 15),
+              margin:
+                  EdgeInsets.only(bottom: SizeConfig.safeBlockHorizontal * 5),
               child: RaisedButton(
                 shape: RoundedRectangleBorder(
                   side: BorderSide(
@@ -70,12 +71,15 @@ Future<void> init(context) async {
                 color: Theme.of(context).accentColor,
                 textColor: Theme.of(context).primaryColor,
                 child: Padding(
-                  padding: EdgeInsets.only(left: 20, right: 20),
+                  padding: EdgeInsets.only(
+                    left: SizeConfig.safeBlockHorizontal * 5,
+                    right: SizeConfig.safeBlockHorizontal * 5,
+                  ),
                   child: Text(
                     'Play',
                     style: TextStyle(
                       fontFamily: 'Montserrat',
-                      fontSize: 20,
+                      fontSize: SizeConfig.safeBlockHorizontal * 5,
                       fontWeight: FontWeight.w600,
                       letterSpacing: -1,
                     ),
@@ -89,9 +93,50 @@ Future<void> init(context) async {
                       builder: (_) => CustomDialog(
                         title: 'Too Short!!',
                         contents: [
-                          Text('Username cannot be less than 4 letters.')
+                          Text(
+                            'Username cannot be less than 4 letters.',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontFamily: 'Montserrat',
+                              fontSize: SizeConfig.safeBlockHorizontal * 4,
+                              fontWeight: FontWeight.w300,
+                              letterSpacing: -1,
+                            ),
+                          )
                         ],
-                        buttons: [],
+                        buttons: [
+                          Container(
+                            margin: EdgeInsets.only(
+                                bottom: SizeConfig.safeBlockHorizontal * 3),
+                            child: RaisedButton(
+                              shape: RoundedRectangleBorder(
+                                side: BorderSide(
+                                  color: Theme.of(context).primaryColor,
+                                ),
+                                borderRadius: BorderRadius.circular(20),
+                              ),
+                              color: Theme.of(context).accentColor,
+                              textColor: Theme.of(context).primaryColor,
+                              child: Padding(
+                                padding: EdgeInsets.only(
+                                  left: SizeConfig.safeBlockHorizontal * 5,
+                                  right: SizeConfig.safeBlockHorizontal * 5,
+                                ),
+                                child: Text(
+                                  'OK',
+                                  style: TextStyle(
+                                    fontFamily: 'Montserrat',
+                                    fontSize:
+                                        SizeConfig.safeBlockHorizontal * 5,
+                                    fontWeight: FontWeight.w600,
+                                    letterSpacing: -1,
+                                  ),
+                                ),
+                              ),
+                              onPressed: () => Navigator.of(context).pop(),
+                            ),
+                          ),
+                        ],
                       ),
                     );
                   } else {
