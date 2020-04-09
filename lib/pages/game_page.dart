@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:facebook_audience_network/ad/ad_rewarded.dart';
+import 'package:facebook_audience_network/facebook_audience_network.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
@@ -233,12 +234,15 @@ class _GamePageState extends State<GamePage> {
             icon: Icon(
               Icons.clear,
               color: Theme.of(context).accentColor,
+              size: SizeConfig.safeBlockVertical * 2.5,
             ),
           ),
         ),
         readOnly: true,
         textAlignVertical: TextAlignVertical.center,
-        style: TextStyle(fontFamily: 'Montserrat'),
+        style: TextStyle(
+            fontFamily: 'Montserrat',
+            fontSize: SizeConfig.safeBlockVertical * 2),
       ),
     );
   }
@@ -254,7 +258,8 @@ class _GamePageState extends State<GamePage> {
         ),
         elevation: 0.0,
         fillColor: Theme.of(context).primaryColor,
-        child: Icon(MdiIcons.lockQuestion),
+        child: Icon(MdiIcons.lockQuestion,
+            size: SizeConfig.safeBlockVertical * 2.8),
         onPressed: () {
           showHintPage();
         },
@@ -277,7 +282,7 @@ class _GamePageState extends State<GamePage> {
           'Enter',
           style: TextStyle(
             fontFamily: 'Montserrat',
-            fontSize: SizeConfig.safeBlockHorizontal * 4.5,
+            fontSize: SizeConfig.safeBlockHorizontal * 4,
           ),
         ),
         onPressed: () {
@@ -451,11 +456,11 @@ class _GamePageState extends State<GamePage> {
                   ),
                   onPressed: () async {
                     hintShowed = false;
-                    FacebookRewardedVideoAd.loadRewardedVideoAd(
+                    FacebookAudienceNetwork.loadRewardedVideoAd(
                       placementId: "710644546346434_710647189679503",
                       listener: (result, value) {
                         if (result == RewardedVideoAdResult.LOADED)
-                          FacebookRewardedVideoAd.showRewardedVideoAd();
+                          FacebookAudienceNetwork.showRewardedVideoAd();
                         if (result == RewardedVideoAdResult.VIDEO_COMPLETE) {
                           hintShowed = true;
                           Navigator.of(context).pop();
@@ -482,11 +487,11 @@ class _GamePageState extends State<GamePage> {
                     if (!hintShowed) {
                       _showHintFirst();
                     } else {
-                      FacebookRewardedVideoAd.loadRewardedVideoAd(
+                      FacebookAudienceNetwork.loadRewardedVideoAd(
                         placementId: "710644546346434_710647189679503",
                         listener: (result, value) {
                           if (result == RewardedVideoAdResult.LOADED)
-                            FacebookRewardedVideoAd.showRewardedVideoAd();
+                            FacebookAudienceNetwork.showRewardedVideoAd();
                           if (result == RewardedVideoAdResult.VIDEO_COMPLETE) {
                             Navigator.of(context).pop();
                             showWorkout();
