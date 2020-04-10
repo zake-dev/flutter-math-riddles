@@ -84,7 +84,7 @@ Widget _buildTriangle(numbers, {isAnswer = false}) {
                   child: Text(
                     '▲',
                     style:
-                        TextStyle(fontSize: SizeConfig.safeBlockHorizontal * 9),
+                        TextStyle(fontSize: SizeConfig.safeBlockVertical * 5),
                   ),
                 ),
               ),
