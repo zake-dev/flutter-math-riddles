@@ -54,7 +54,7 @@ Widget _buildTriangle(numbers, {isAnswer = false}) {
             SizedBox(),
             Text(
               '▲',
-              style: TextStyle(fontSize: SizeConfig.safeBlockHorizontal * 8),
+              style: TextStyle(fontSize: SizeConfig.safeBlockHorizontal * 9),
             ),
             SizedBox()
           ],

@@ -111,7 +111,7 @@ class _GamePageState extends State<GamePage> {
               final score = snapshot.data[1];
               Color pointColor;
               if (score < 500)
-                pointColor = Colors.white;
+                pointColor = Theme.of(context).accentColor;
               else if (score < 1000)
                 pointColor = Colors.orange.shade200;
               else if (score < 2500)
@@ -500,23 +500,25 @@ class _GamePageState extends State<GamePage> {
                     ],
                   ),
                   onPressed: () async {
-                    hintShowed = false;
-                    FacebookAudienceNetwork.loadRewardedVideoAd(
-                      placementId: "710644546346434_710647189679503",
-                      listener: (result, value) {
-                        if (result == RewardedVideoAdResult.LOADED)
-                          FacebookAudienceNetwork.showRewardedVideoAd();
-                        if (result == RewardedVideoAdResult.VIDEO_COMPLETE) {
-                          hintShowed = true;
-                          Navigator.of(context).pop();
-                          showHint();
-                        }
-                        if (result == RewardedVideoAdResult.ERROR) {
-                          Navigator.of(context).pop();
-                          _showAdFailed('hint');
-                        }
-                      },
-                    );
+                    Navigator.of(context).pop();
+                    showHint();
+                    // hintShowed = false;
+                    // FacebookAudienceNetwork.loadRewardedVideoAd(
+                    //   placementId: "710644546346434_710647189679503",
+                    //   listener: (result, value) {
+                    //     if (result == RewardedVideoAdResult.LOADED)
+                    //       FacebookAudienceNetwork.showRewardedVideoAd();
+                    //     if (result == RewardedVideoAdResult.VIDEO_COMPLETE) {
+                    //       hintShowed = true;
+                    //       Navigator.of(context).pop();
+                    //       showHint();
+                    //     }
+                    //     if (result == RewardedVideoAdResult.ERROR) {
+                    //       Navigator.of(context).pop();
+                    //       _showAdFailed('hint');
+                    //     }
+                    //   },
+                    // );
                   },
                 ),
                 RaisedButton(
@@ -530,25 +532,27 @@ class _GamePageState extends State<GamePage> {
                     ],
                   ),
                   onPressed: () async {
-                    if (!hintShowed) {
-                      _showHintFirst();
-                    } else {
-                      FacebookAudienceNetwork.loadRewardedVideoAd(
-                        placementId: "710644546346434_710647189679503",
-                        listener: (result, value) {
-                          if (result == RewardedVideoAdResult.LOADED)
-                            FacebookAudienceNetwork.showRewardedVideoAd();
-                          if (result == RewardedVideoAdResult.VIDEO_COMPLETE) {
-                            Navigator.of(context).pop();
-                            showWorkout();
-                          }
-                          if (result == RewardedVideoAdResult.ERROR) {
-                            Navigator.of(context).pop();
-                            _showAdFailed('solution');
-                          }
-                        },
-                      );
-                    }
+                    Navigator.of(context).pop();
+                    showWorkout();
+                    // if (!hintShowed) {
+                    //   _showHintFirst();
+                    // } else {
+                    //   FacebookAudienceNetwork.loadRewardedVideoAd(
+                    //     placementId: "710644546346434_710647189679503",
+                    //     listener: (result, value) {
+                    //       if (result == RewardedVideoAdResult.LOADED)
+                    //         FacebookAudienceNetwork.showRewardedVideoAd();
+                    //       if (result == RewardedVideoAdResult.VIDEO_COMPLETE) {
+                    //         Navigator.of(context).pop();
+                    //         showWorkout();
+                    //       }
+                    //       if (result == RewardedVideoAdResult.ERROR) {
+                    //         Navigator.of(context).pop();
+                    //         _showAdFailed('solution');
+                    //       }
+                    //     },
+                    //   );
+                    // }
                   },
                 )
               ],
