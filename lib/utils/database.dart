@@ -99,7 +99,7 @@ class DB {
     final prefs = await SharedPreferences.getInstance();
     final deviceID = prefs.getString('deviceID');
     print('deviceID = $deviceID');
-    prefs.clear();
+    await prefs.clear();
 
     // Clear Database
     await firestore.collection('users').document(deviceID).delete();
