@@ -13,9 +13,9 @@ class TrianglePuzzle extends Center {
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
+                  // _buildTriangle(puzzle['puzzle'][0]),
+                  // SizedBox(width: SizeConfig.safeBlockHorizontal * 2),
                   _buildTriangle(puzzle['puzzle'][0]),
-                  SizedBox(width: SizeConfig.safeBlockHorizontal * 2),
-                  _buildTriangle(puzzle['puzzle'][1]),
                 ],
               ),
               SizedBox(height: SizeConfig.safeBlockVertical * 2),
@@ -23,9 +23,9 @@ class TrianglePuzzle extends Center {
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  _buildTriangle(puzzle['puzzle'][2]),
+                  _buildTriangle(puzzle['puzzle'][1]),
                   SizedBox(width: SizeConfig.safeBlockHorizontal * 2),
-                  _buildTriangle(puzzle['puzzle'][3], isAnswer: true),
+                  _buildTriangle(puzzle['puzzle'][2], isAnswer: true),
                 ],
               ),
             ],

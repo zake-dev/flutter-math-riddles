@@ -679,7 +679,7 @@ Future<Map<String, dynamic>> triangleAddSub() async {
   // Generate random numbers
   List numbers = [];
   int flag = (random.nextInt(100) > 50) ? 1 : -1;
-  for (int i = 0; i < 4; i++)
+  for (int i = 0; i < 3; i++)
     numbers.add([random.nextInt(71) + 30, flag * (random.nextInt(30) + 1)]);
 
   // Build Puzzle
@@ -696,7 +696,7 @@ Future<Map<String, dynamic>> triangleAddSub() async {
       puzzle['workout'].add('${a.abs()} + ${b.abs()} = $answer');
   }
 
-  puzzle['answer'] = newPuzzle[3][2].toString();
+  puzzle['answer'] = newPuzzle[2][2].toString();
   puzzle['puzzle'] = newPuzzle;
 
   return puzzle;
@@ -717,7 +717,7 @@ Future<Map<String, dynamic>> triangleMultiply() async {
 
   // Generate random numbers
   List numbers = [];
-  for (int i = 0; i < 4; i++)
+  for (int i = 0; i < 3; i++)
     numbers.add([random.nextInt(14) + 2, random.nextInt(15) + 1]);
 
   // Build Puzzle
@@ -731,7 +731,7 @@ Future<Map<String, dynamic>> triangleMultiply() async {
     puzzle['workout'].add('${a.abs()} x ${b.abs()} = $answer');
   }
 
-  puzzle['answer'] = newPuzzle[3][2].toString();
+  puzzle['answer'] = newPuzzle[2][2].toString();
   puzzle['puzzle'] = newPuzzle;
 
   return puzzle;
@@ -753,7 +753,7 @@ Future<Map<String, dynamic>> triangleDoubleAdd() async {
   // Generate random numbers
   List numbers = [];
   int flag = (random.nextInt(100) > 50) ? 1 : -1;
-  for (int i = 0; i < 4; i++)
+  for (int i = 0; i < 3; i++)
     numbers.add([random.nextInt(45) + 16, flag * (random.nextInt(30) + 1)]);
 
   // Build Puzzle
@@ -767,7 +767,7 @@ Future<Map<String, dynamic>> triangleDoubleAdd() async {
         .add('(${a.abs()} x 2) ${(b < 0) ? '-' : '+'} ${b.abs()} = $answer');
   }
 
-  puzzle['answer'] = newPuzzle[3][2].toString();
+  puzzle['answer'] = newPuzzle[2][2].toString();
   puzzle['puzzle'] = newPuzzle;
 
   return puzzle;
@@ -789,7 +789,7 @@ Future<Map<String, dynamic>> triangleTripleAdd() async {
   // Generate random numbers
   List numbers = [];
   int flag = (random.nextInt(100) > 50) ? 1 : -1;
-  for (int i = 0; i < 4; i++)
+  for (int i = 0; i < 3; i++)
     numbers.add([random.nextInt(30) + 11, flag * (random.nextInt(30) + 1)]);
 
   // Build Puzzle
@@ -803,7 +803,7 @@ Future<Map<String, dynamic>> triangleTripleAdd() async {
         .add('(${a.abs()} x 3) ${(b < 0) ? '-' : '+'} ${b.abs()} = $answer');
   }
 
-  puzzle['answer'] = newPuzzle[3][2].toString();
+  puzzle['answer'] = newPuzzle[2][2].toString();
   puzzle['puzzle'] = newPuzzle;
 
   return puzzle;
@@ -824,10 +824,10 @@ Future<Map<String, dynamic>> triangleComplex1() async {
 
   // Generate random numbers
   List<int> sampleNumbers =
-      (List.generate(13, (i) => i + 1)..shuffle()).take(8).toList();
+      (List.generate(13, (i) => i + 1)..shuffle()).take(6).toList();
   List numbers = [];
   final int flag = (random.nextInt(100) > 50) ? -1 : 1;
-  for (int i = 0; i < 8; i += 2)
+  for (int i = 0; i < 6; i += 2)
     numbers.add([sampleNumbers[i], flag * sampleNumbers[i + 1]]);
 
   // Build Puzzle
@@ -841,7 +841,7 @@ Future<Map<String, dynamic>> triangleComplex1() async {
     puzzle['workout'].add(
         '${(flag < 0) ? '| ' : ''}$a\u00B2 ${(flag < 0) ? '-' : '+'}  ${b.abs()}\u00B2${(flag < 0) ? ' |' : ''} = $answer');
   }
-  puzzle['answer'] = newPuzzle[3][2].toString();
+  puzzle['answer'] = newPuzzle[2][2].toString();
   puzzle['puzzle'] = newPuzzle;
 
   return puzzle;
@@ -862,7 +862,7 @@ Future<Map<String, dynamic>> triangleComplex2() async {
   // Generate random numbers
   List numbers = [];
   final int flag = (random.nextInt(100) > 50) ? -1 : 1;
-  for (int i = 0; i < 4; i++)
+  for (int i = 0; i < 3; i++)
     numbers.add([random.nextInt(89) + 11, random.nextInt(89) + 11]);
 
   // Build Puzzle
@@ -877,7 +877,7 @@ Future<Map<String, dynamic>> triangleComplex2() async {
     puzzle['workout'].add(
         '${(flag < 0) ? '| ' : ''}(${a.join(' x ')}) ${(flag < 0) ? '-' : '+'} (${b.join(' x ')})${(flag < 0) ? ' |' : ''} = $answer');
   }
-  puzzle['answer'] = newPuzzle[3][2].toString();
+  puzzle['answer'] = newPuzzle[2][2].toString();
   puzzle['puzzle'] = newPuzzle;
 
   return puzzle;
@@ -898,7 +898,7 @@ Future<Map<String, dynamic>> triangleComplex3() async {
   // Generate random numbers
   List numbers = [];
   final int flag = (random.nextInt(100) > 50) ? -1 : 1;
-  for (int i = 0; i < 4; i++)
+  for (int i = 0; i < 3; i++)
     numbers.add([random.nextInt(89) + 11, random.nextInt(89) + 11]);
 
   // Build Puzzle
@@ -913,7 +913,7 @@ Future<Map<String, dynamic>> triangleComplex3() async {
     puzzle['workout'].add(
         '${(flag < 0) ? '| ' : ''}(${a.join(' x ')}) ${(flag < 0) ? '-' : '+'} (${b.join(' + ')})${(flag < 0) ? ' |' : ''} = $answer');
   }
-  puzzle['answer'] = newPuzzle[3][2].toString();
+  puzzle['answer'] = newPuzzle[2][2].toString();
   puzzle['puzzle'] = newPuzzle;
 
   return puzzle;
