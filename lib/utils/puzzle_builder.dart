@@ -76,7 +76,7 @@ Future<Map<String, dynamic>> oneLineAdd() async {
   final random = Random();
 
   // Puzzle Setting
-  puzzle['hint'] = 'add';
+  puzzle['hint'] = '+';
   puzzle['point'] = random.nextInt(2) + 1;
   puzzle['workout'] = [];
 
@@ -104,7 +104,7 @@ Future<Map<String, dynamic>> oneLineSub() async {
   final random = Random();
 
   // Puzzle Setting
-  puzzle['hint'] = 'subtract';
+  puzzle['hint'] = '-';
   puzzle['point'] = random.nextInt(2) + 1;
   puzzle['workout'] = [];
 
@@ -132,7 +132,7 @@ Future<Map<String, dynamic>> oneLinePositiveMultiply() async {
   final random = Random();
 
   // Puzzle Setting
-  puzzle['hint'] = 'multiply';
+  puzzle['hint'] = 'x';
   puzzle['point'] = random.nextInt(2) + 2;
   puzzle['workout'] = [];
 
@@ -160,7 +160,7 @@ Future<Map<String, dynamic>> oneLineNegativeMultiply() async {
   final random = Random();
 
   // Puzzle Setting
-  puzzle['hint'] = 'multiply';
+  puzzle['hint'] = 'x';
   puzzle['point'] = random.nextInt(2) + 2;
   puzzle['workout'] = [];
 
@@ -188,7 +188,7 @@ Future<Map<String, dynamic>> oneLineDoubleAdd() async {
   final random = Random();
 
   // Puzzle Setting
-  puzzle['hint'] = 'x2 and ...';
+  puzzle['hint'] = 'x2 +/- a';
   puzzle['point'] = random.nextInt(1) + 4;
   puzzle['workout'] = [];
 
@@ -218,7 +218,7 @@ Future<Map<String, dynamic>> oneLineTripleAdd() async {
   final random = Random();
 
   // Puzzle Setting
-  puzzle['hint'] = 'x3 and ...';
+  puzzle['hint'] = 'x3 +/- a';
   puzzle['point'] = random.nextInt(1) + 4;
   puzzle['workout'] = [];
 
@@ -248,7 +248,7 @@ Future<Map<String, dynamic>> oneLineComplex1() async {
   final random = Random();
 
   // Puzzle Setting
-  puzzle['hint'] = 'digit product';
+  puzzle['hint'] = 'ABC = A x B x C';
   puzzle['point'] = random.nextInt(3) + 5;
   puzzle['workout'] = [];
 
@@ -292,7 +292,7 @@ Future<Map<String, dynamic>> multiLineAdd() async {
 
   // Puzzle Setting
   puzzle['point'] = random.nextInt(2) + 1;
-  puzzle['hint'] = 'add';
+  puzzle['hint'] = '+';
   int func(x, y) => (x + y);
   final ops = '+';
 
@@ -327,7 +327,7 @@ Future<Map<String, dynamic>> multiLineSub() async {
 
   // Puzzle Setting
   puzzle['point'] = random.nextInt(2) + 1;
-  puzzle['hint'] = 'subtract';
+  puzzle['hint'] = '-';
   int func(x, y) => (x - y);
   final ops = '-';
 
@@ -362,7 +362,7 @@ Future<Map<String, dynamic>> multiLineDoubleAdd() async {
 
   // Puzzle Setting
   puzzle['point'] = random.nextInt(1) + 4;
-  puzzle['hint'] = 'x2 and ...';
+  puzzle['hint'] = 'x2 +/- a';
   int func(x, y) => (2 * x + y);
 
   // Generate random numbers
@@ -398,7 +398,7 @@ Future<Map<String, dynamic>> multiLineTripleAdd() async {
 
   // Puzzle Setting
   puzzle['point'] = random.nextInt(2) + 4;
-  puzzle['hint'] = 'x3 and ...';
+  puzzle['hint'] = 'x3 +/- a';
   int func(x, y) => (3 * x + y);
 
   // Generate random numbers
@@ -434,7 +434,7 @@ Future<Map<String, dynamic>> multiLineComplex1() async {
 
   // Puzzle Setting
   puzzle['point'] = random.nextInt(2) + 6;
-  puzzle['hint'] = 'Square and ...';
+  puzzle['hint'] = 'a\u00B2 +/- b';
   int func(x, y, z) => (pow(x, 2) + pow(y, 2) * z).abs();
 
   // Generate random numbers
@@ -473,7 +473,7 @@ Future<Map<String, dynamic>> multiLineComplex2() async {
 
   // Puzzle Setting
   puzzle['point'] = random.nextInt(1) + 7;
-  puzzle['hint'] = 'add digits and ...';
+  puzzle['hint'] = 'ABC = A + B + C';
 
   // Generate random numbers
   List numbers = [];
@@ -510,7 +510,7 @@ Future<Map<String, dynamic>> multiLineComplex3() async {
 
   // Puzzle Setting
   puzzle['point'] = random.nextInt(1) + 7;
-  puzzle['hint'] = 'product digits and ...';
+  puzzle['hint'] = 'ABC = A x B x C';
 
   // Generate random numbers
   List numbers = [];
@@ -547,7 +547,7 @@ Future<Map<String, dynamic>> multiLineComplex4() async {
 
   // Puzzle Setting
   puzzle['point'] = random.nextInt(2) + 9;
-  puzzle['hint'] = 'product digits and ...';
+  puzzle['hint'] = 'ABC = A x B x C';
 
   // Generate random numbers
   List numbers = [];
@@ -685,7 +685,7 @@ Future<Map<String, dynamic>> triangleAddSub() async {
 
   // Puzzle Setting
   puzzle['point'] = random.nextInt(3) + 1;
-  puzzle['hint'] = 'sum or diffrence';
+  puzzle['hint'] = '+ or -';
   int func(x, y) => (x + y);
 
   // Generate random numbers
@@ -759,7 +759,7 @@ Future<Map<String, dynamic>> triangleDoubleAdd() async {
 
   // Puzzle Setting
   puzzle['point'] = random.nextInt(2) + 4;
-  puzzle['hint'] = 'x2 and ...';
+  puzzle['hint'] = 'x2 +/- a';
   int func(x, y) => (2 * x + y);
 
   // Generate random numbers
@@ -795,7 +795,7 @@ Future<Map<String, dynamic>> triangleTripleAdd() async {
 
   // Puzzle Setting
   puzzle['point'] = random.nextInt(2) + 4;
-  puzzle['hint'] = 'x3 and ...';
+  puzzle['hint'] = 'x3 +/- a';
   int func(x, y) => (3 * x + y);
 
   // Generate random numbers
@@ -831,7 +831,7 @@ Future<Map<String, dynamic>> triangleComplex1() async {
 
   // Puzzle Setting
   puzzle['point'] = random.nextInt(2) + 6;
-  puzzle['hint'] = 'Square and ...';
+  puzzle['hint'] = 'a\u00B2 +/- b';
   int func(x, y, z) => (pow(x, 2) + pow(y, 2) * z).abs();
 
   // Generate random numbers
@@ -869,7 +869,7 @@ Future<Map<String, dynamic>> triangleComplex2() async {
 
   // Puzzle Setting
   puzzle['point'] = random.nextInt(2) + 6;
-  puzzle['hint'] = 'product digits and ...';
+  puzzle['hint'] = 'ABC = A x B x C';
 
   // Generate random numbers
   List numbers = [];
@@ -905,7 +905,7 @@ Future<Map<String, dynamic>> triangleComplex3() async {
 
   // Puzzle Setting
   puzzle['point'] = random.nextInt(3) + 8;
-  puzzle['hint'] = 'product digits and ...';
+  puzzle['hint'] = 'ABC = A x B x C';
 
   // Generate random numbers
   List numbers = [];
@@ -941,7 +941,7 @@ Future<Map<String, dynamic>> multiLineHideAddSub() async {
 
   // Puzzle Setting
   puzzle['point'] = random.nextInt(2) + 1;
-  puzzle['hint'] = 'add/subtract';
+  puzzle['hint'] = '+ or -';
   final flag = (random.nextInt(100) > 50) ? -1 : 1;
   int func(x, y) => (x + y * flag);
   final ops = (flag < 0) ? '-' : '+';
@@ -975,7 +975,7 @@ Future<Map<String, dynamic>> multiLineHideMultiply() async {
 
   // Puzzle Setting
   puzzle['point'] = random.nextInt(2) + 1;
-  puzzle['hint'] = 'multiply';
+  puzzle['hint'] = 'x';
   int func(x, y) => (x * y);
   final ops = 'x';
   final funcNumber = random.nextInt(8) + 2;
@@ -1008,7 +1008,7 @@ Future<Map<String, dynamic>> multiLineHideComplex1() async {
 
   // Puzzle Setting
   puzzle['point'] = random.nextInt(1) + 8;
-  puzzle['hint'] = 'add something';
+  puzzle['hint'] = '+ a';
   int func(x, y) => (x + y);
   final ops = '+';
 
@@ -1043,7 +1043,7 @@ Future<Map<String, dynamic>> multiLineComplex5() async {
 
   // Puzzle Setting
   puzzle['point'] = random.nextInt(2) + 6;
-  puzzle['hint'] = 'a x b + b';
+  puzzle['hint'] = '(a x b) + b';
   int func(x, y) => (x * y + y);
 
   // Generate random numbers
@@ -1080,7 +1080,7 @@ Future<Map<String, dynamic>> multiLineHideComplex2() async {
 
   // Puzzle Setting
   puzzle['point'] = random.nextInt(2) + 4;
-  puzzle['hint'] = 'a\u00B2 + ...';
+  puzzle['hint'] = 'a\u00B2 +/- b';
   int func(x, y) => (pow(x, 2) + y);
 
   // Generate random numbers

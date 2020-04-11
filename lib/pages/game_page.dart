@@ -537,27 +537,27 @@ class _GamePageState extends State<GamePage> {
                     ],
                   ),
                   onPressed: () async {
-                    Navigator.of(context).pop();
-                    showWorkout();
-                    // if (!hintShowed) {
-                    //   _showHintFirst();
-                    // } else {
-                    //   FacebookAudienceNetwork.loadRewardedVideoAd(
-                    //     placementId: "710644546346434_710647189679503",
-                    //     listener: (result, value) {
-                    //       if (result == RewardedVideoAdResult.LOADED)
-                    //         FacebookAudienceNetwork.showRewardedVideoAd();
-                    //       if (result == RewardedVideoAdResult.VIDEO_COMPLETE) {
-                    //         Navigator.of(context).pop();
-                    //         showWorkout();
-                    //       }
-                    //       if (result == RewardedVideoAdResult.ERROR) {
-                    //         Navigator.of(context).pop();
-                    //         _showAdFailed('solution');
-                    //       }
-                    //     },
-                    //   );
-                    // }
+                    // Navigator.of(context).pop();
+                    // showWorkout();
+                    if (!hintShowed) {
+                      _showHintFirst();
+                    } else {
+                      FacebookAudienceNetwork.loadRewardedVideoAd(
+                        placementId: "710644546346434_710647189679503",
+                        listener: (result, value) {
+                          if (result == RewardedVideoAdResult.LOADED)
+                            FacebookAudienceNetwork.showRewardedVideoAd();
+                          if (result == RewardedVideoAdResult.VIDEO_COMPLETE) {
+                            Navigator.of(context).pop();
+                            showWorkout();
+                          }
+                          if (result == RewardedVideoAdResult.ERROR) {
+                            Navigator.of(context).pop();
+                            _showAdFailed('solution');
+                          }
+                        },
+                      );
+                    }
                   },
                 )
               ],
@@ -696,7 +696,7 @@ class _GamePageState extends State<GamePage> {
                   style: TextStyle(
                     fontFamily: 'Montserrat',
                     fontWeight: FontWeight.w300,
-                    fontSize: SizeConfig.safeBlockHorizontal * 5,
+                    fontSize: SizeConfig.safeBlockHorizontal * 5.2,
                   ),
                 ),
               ],
