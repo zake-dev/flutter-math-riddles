@@ -284,10 +284,11 @@ class _GamePageState extends State<GamePage> {
           ),
         ),
         readOnly: true,
-        textAlignVertical: TextAlignVertical.center,
+        textAlignVertical: TextAlignVertical.bottom,
         style: TextStyle(
             fontFamily: 'Montserrat',
-            fontSize: SizeConfig.safeBlockVertical * 2),
+            fontSize: SizeConfig.safeBlockVertical * 2,
+            height: 1),
       ),
     );
   }
