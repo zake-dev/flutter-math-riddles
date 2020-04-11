@@ -24,7 +24,7 @@ class _SettingsPageState extends State<SettingsPage> {
   Widget build(BuildContext context) {
     return Container(
       width: SizeConfig.safeBlockHorizontal * 75,
-      height: SizeConfig.safeBlockVertical * 20,
+      // height: SizeConfig.safeBlockVertical * 50,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         mainAxisSize: MainAxisSize.max,
@@ -36,17 +36,34 @@ class _SettingsPageState extends State<SettingsPage> {
             fontWeight: FontWeight.w400,
             marginRight: SizeConfig.safeBlockHorizontal * 3,
           ),
-          Expanded(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.end,
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              _buildSettingTitle(context, 'Select Theme',
+                  size: SizeConfig.safeBlockHorizontal * 5, marginRight: 0),
+              _buildSwitch(),
+            ],
+          ),
+          Container(
+            margin: EdgeInsets.only(right: SizeConfig.safeBlockHorizontal * 3),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.min,
               children: [
-                _buildSettingTitle(context, 'Select Theme',
+                _buildSettingTitle(context, 'Diffiuclty',
                     size: SizeConfig.safeBlockHorizontal * 5, marginRight: 0),
-                _buildSwitch(),
+                SizedBox(height: SizeConfig.safeBlockVertical * 1),
+                _buildDifficultyButton(),
               ],
             ),
           ),
-          _buildResetButton(),
+          SizedBox(height: SizeConfig.safeBlockVertical * 2),
+          Column(children: [
+            _buildSettingTitle(context, 'Reset Userdata  ',
+                size: SizeConfig.safeBlockHorizontal * 5, marginRight: 0),
+            SizedBox(height: SizeConfig.safeBlockVertical * 1),
+            _buildResetButton(),
+          ])
         ],
       ),
     );
@@ -103,6 +120,7 @@ class _SettingsPageState extends State<SettingsPage> {
 
   Widget _buildResetButton() {
     return Container(
+      height: SizeConfig.safeBlockVertical * 5,
       margin: EdgeInsets.only(right: SizeConfig.safeBlockHorizontal * 3),
       child: RaisedButton(
         color: Theme.of(context).primaryColor,
@@ -170,6 +188,146 @@ class _SettingsPageState extends State<SettingsPage> {
           );
         },
       ),
+    );
+  }
+
+  Widget _buildDifficultyButton() {
+    return FutureBuilder(
+      future: DB.getDifficultyOptions(),
+      builder: (context, snapshot) {
+        final easyModeOn = snapshot.data['easyMode'];
+        final normalModeOn = snapshot.data['normalMode'];
+        final hardModeOn = snapshot.data['hardMode'];
+
+        return Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            GestureDetector(
+              child: Container(
+                width: SizeConfig.safeBlockHorizontal * 20,
+                height: SizeConfig.safeBlockHorizontal * 9.5,
+                decoration: BoxDecoration(
+                  color: (easyModeOn)
+                      ? Theme.of(context).accentColor
+                      : Theme.of(context).primaryColor,
+                  border: Border.all(
+                    color: (easyModeOn)
+                        ? Colors.transparent
+                        : Theme.of(context).accentColor,
+                    width: 1,
+                  ),
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(25),
+                    bottomLeft: Radius.circular(25),
+                  ),
+                ),
+                child: Center(
+                  child: Text(
+                    ' Easy',
+                    style: TextStyle(
+                      decoration: TextDecoration.none,
+                      fontFamily: 'Montserrat',
+                      fontSize: SizeConfig.safeBlockVertical * 2,
+                      fontWeight: FontWeight.w600,
+                      color: (easyModeOn)
+                          ? Theme.of(context).primaryColor
+                          : Theme.of(context).accentColor,
+                    ),
+                  ),
+                ),
+              ),
+              onTap: () async {
+                await DB.setDifficulty(
+                    {'easyMode': true, 'normalMode': false, 'hardMode': false});
+                setState(() {});
+              },
+            ),
+            GestureDetector(
+              child: Container(
+                width: SizeConfig.safeBlockHorizontal * 22,
+                height: SizeConfig.safeBlockHorizontal * 9.5,
+                decoration: BoxDecoration(
+                  color: (normalModeOn)
+                      ? Theme.of(context).accentColor
+                      : Theme.of(context).primaryColor,
+                  border: Border(
+                    top: BorderSide(
+                        color: (normalModeOn)
+                            ? Colors.transparent
+                            : Theme.of(context).accentColor,
+                        width: 1),
+                    bottom: BorderSide(
+                        color: (normalModeOn)
+                            ? Colors.transparent
+                            : Theme.of(context).accentColor,
+                        width: 1),
+                  ),
+                ),
+                child: Center(
+                  child: Text(
+                    'Normal',
+                    style: TextStyle(
+                      decoration: TextDecoration.none,
+                      fontFamily: 'Montserrat',
+                      fontSize: SizeConfig.safeBlockVertical * 2,
+                      fontWeight: FontWeight.w600,
+                      color: (normalModeOn)
+                          ? Theme.of(context).primaryColor
+                          : Theme.of(context).accentColor,
+                    ),
+                  ),
+                ),
+              ),
+              onTap: () async {
+                await DB.setDifficulty(
+                    {'easyMode': false, 'normalMode': true, 'hardMode': false});
+                setState(() {});
+              },
+            ),
+            GestureDetector(
+              child: Container(
+                width: SizeConfig.safeBlockHorizontal * 20,
+                height: SizeConfig.safeBlockHorizontal * 9.5,
+                decoration: BoxDecoration(
+                  color: (hardModeOn)
+                      ? Theme.of(context).accentColor
+                      : Theme.of(context).primaryColor,
+                  border: Border.all(
+                    color: (hardModeOn)
+                        ? Colors.transparent
+                        : Theme.of(context).accentColor,
+                    width: 1,
+                  ),
+                  borderRadius: BorderRadius.only(
+                    topRight: Radius.circular(25),
+                    bottomRight: Radius.circular(25),
+                  ),
+                ),
+                child: Center(
+                  child: Text(
+                    'Hard ',
+                    style: TextStyle(
+                      decoration: TextDecoration.none,
+                      fontFamily: 'Montserrat',
+                      fontSize: SizeConfig.safeBlockVertical * 2,
+                      fontWeight: FontWeight.w600,
+                      color: (hardModeOn)
+                          ? Theme.of(context).primaryColor
+                          : Theme.of(context).accentColor,
+                    ),
+                  ),
+                ),
+              ),
+              onTap: () async {
+                await DB.setDifficulty(
+                    {'easyMode': false, 'normalMode': false, 'hardMode': true});
+                setState(() {});
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 }

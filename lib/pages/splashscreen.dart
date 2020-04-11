@@ -8,6 +8,7 @@ import 'package:math_riddles/pages/home_page.dart';
 import 'package:math_riddles/utils/connectivity.dart' as NetworkConnection;
 import 'package:math_riddles/utils/database.dart';
 import 'package:math_riddles/utils/size_config.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Splashscreen extends StatefulWidget {
   @override
@@ -51,5 +52,12 @@ class _SplashscreenState extends State<Splashscreen> {
     final deviceID = deviceInfo.androidId;
     await DB.updateUser(deviceID);
     await DB.fetchData(deviceID);
+
+    final prefs = await SharedPreferences.getInstance();
+    if (!prefs.containsKey('normalMode')) {
+      await prefs.setBool('easyMode', false);
+      await prefs.setBool('normalMode', true);
+      await prefs.setBool('hardMode', false);
+    }
   }
 }

@@ -142,4 +142,18 @@ class DB {
         await firestore.collection('admin').document('databaseInfo').get();
     return dbInfo.data['latestVersion'];
   }
+
+  static Future<Map<String, bool>> getDifficultyOptions() async {
+    final prefs = await SharedPreferences.getInstance();
+    return {
+      'easyMode': prefs.getBool('easyMode'),
+      'normalMode': prefs.getBool('normalMode'),
+      'hardMode': prefs.getBool('hardMode')
+    };
+  }
+
+  static Future<void> setDifficulty(Map<String, bool> options) async {
+    final prefs = await SharedPreferences.getInstance();
+    options.forEach((k, v) async => await prefs.setBool(k, v));
+  }
 }

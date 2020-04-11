@@ -1,5 +1,7 @@
 import 'dart:math';
 
+import 'package:shared_preferences/shared_preferences.dart';
+
 typedef CreatePuzzle();
 
 final List<CreatePuzzle> easyPuzzle = [
@@ -12,17 +14,19 @@ final List<CreatePuzzle> easyPuzzle = [
   triangleAddSub,
   triangleMultiply,
 ];
-final List<CreatePuzzle> mediumPuzzle = [
+final List<CreatePuzzle> semiEasyPuzzle = [
   oneLineDoubleAdd,
   oneLineTripleAdd,
   multiLineDoubleAdd,
   multiLineTripleAdd,
-  multiLineComplex1,
-  multiLineComplex2,
-  multiLineComplex3,
   multiLineEquationEasy,
   triangleDoubleAdd,
   triangleTripleAdd,
+];
+final List<CreatePuzzle> semiHardPuzzle = [
+  multiLineComplex1,
+  multiLineComplex2,
+  multiLineComplex3,
   triangleComplex1,
   triangleComplex2,
   oneLineComplex1,
@@ -34,16 +38,26 @@ final List<CreatePuzzle> hardPuzzle = [
 ];
 
 Future<Map<String, dynamic>> getRandomPuzzle() async {
-  final difficulty = Random().nextDouble();
+  final prefs = await SharedPreferences.getInstance();
+  final easyModeOn = prefs.getBool('easyMode');
+  final normalModeOn = prefs.getBool('normalMode');
+  final hardModeOn = prefs.getBool('hardMode');
 
   Map puzzle;
 
-  if (difficulty < 0.45)
-    puzzle = await (easyPuzzle..shuffle())[0]();
-  else if (difficulty < 0.8)
-    puzzle = await (mediumPuzzle..shuffle())[0]();
-  else if (difficulty < 1) puzzle = await (hardPuzzle..shuffle())[0]();
-
+  if (easyModeOn) {
+    final pool = ([easyPuzzle, semiEasyPuzzle]..shuffle())[0];
+    return (pool..shuffle())[0]();
+  } else if (normalModeOn) {
+    final difficulty = Random().nextDouble();
+    if (difficulty < 0.4) return (easyPuzzle..shuffle())[0]();
+    if (difficulty < 0.7) return (semiEasyPuzzle..shuffle())[0]();
+    if (difficulty < 0.9) return (semiHardPuzzle..shuffle())[0]();
+    if (difficulty < 1.0) return (hardPuzzle..shuffle())[0]();
+  } else if (hardModeOn) {
+    final pool = ([semiHardPuzzle, hardPuzzle]..shuffle())[0];
+    return (pool..shuffle())[0]();
+  }
   // puzzle = await triangleComplex2();
 
   return puzzle;
@@ -227,7 +241,7 @@ Future<Map<String, dynamic>> oneLineComplex1() async {
 
   // Puzzle Setting
   puzzle['hint'] = 'digit product';
-  puzzle['point'] = random.nextInt(3) + 4;
+  puzzle['point'] = random.nextInt(3) + 5;
   puzzle['workout'] = [];
 
   int initialNumber;
@@ -411,7 +425,7 @@ Future<Map<String, dynamic>> multiLineComplex1() async {
   final random = Random();
 
   // Puzzle Setting
-  puzzle['point'] = random.nextInt(3) + 5;
+  puzzle['point'] = random.nextInt(2) + 6;
   puzzle['hint'] = 'Square and ...';
   int func(x, y, z) => (pow(x, 2) + pow(y, 2) * z).abs();
 
@@ -623,7 +637,7 @@ Future<Map<String, dynamic>> multiLineEquationEasy() async {
   final z = answers[2];
 
   puzzle['answer'] = '${y + z}';
-  puzzle['point'] = Random().nextInt(3) + 5;
+  puzzle['point'] = Random().nextInt(2) + 4;
   puzzle['hint'] = 'Find ${marks[0]} first';
 
   // Generate
