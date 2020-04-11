@@ -115,7 +115,9 @@ class _MainMenu extends Container {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               _buildTitle(context),
+              SizedBox(height: SizeConfig.safeBlockVertical * 1),
               GameButton(),
+              SizedBox(height: SizeConfig.safeBlockVertical * 1),
               _buildButtons(context),
             ],
           ),
