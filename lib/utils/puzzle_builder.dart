@@ -33,12 +33,16 @@ final List<CreatePuzzle> hardPuzzle = [
   triangleComplex3,
 ];
 
-const PUZZLE_COUNT = 3;
-
 Future<Map<String, dynamic>> getRandomPuzzle() async {
-  final puzzleNumber = Random().nextInt(PUZZLE_COUNT) + 1;
-  print('Puzzle No.$puzzleNumber selected.');
-  Map puzzle = await (easyPuzzle..shuffle())[0]();
+  final difficulty = Random().nextDouble();
+
+  Map puzzle;
+
+  if (difficulty < 0.45)
+    puzzle = await (easyPuzzle..shuffle())[0]();
+  else if (difficulty < 0.8)
+    puzzle = await (mediumPuzzle..shuffle())[0]();
+  else if (difficulty < 1) puzzle = await (hardPuzzle..shuffle())[0]();
 
   // puzzle = await triangleComplex2();
 

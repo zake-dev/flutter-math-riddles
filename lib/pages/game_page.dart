@@ -113,13 +113,13 @@ class _GamePageState extends State<GamePage> {
               if (score < 500)
                 pointColor = Theme.of(context).accentColor;
               else if (score < 1000)
-                pointColor = Colors.orange.shade200;
-              else if (score < 2500)
                 pointColor = Colors.green.shade300;
-              else if (score < 5000)
+              else if (score < 2500)
                 pointColor = Colors.blue.shade300;
-              else if (score < 10000)
+              else if (score < 5000)
                 pointColor = Colors.purple.shade200;
+              else if (score < 10000)
+                pointColor = Colors.orange.shade200;
               else
                 pointColor = Colors.red.shade400;
 

@@ -113,7 +113,7 @@ class _SettingsPageState extends State<SettingsPage> {
           borderRadius: BorderRadius.circular(8),
         ),
         child: Text(
-          'Reset',
+          'Reset Progress',
           style: TextStyle(
             fontFamily: 'Montserrat',
             fontSize: SizeConfig.safeBlockHorizontal * 4.5,
