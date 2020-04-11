@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:math_riddles/pages/Init.dart' as Init;
 import 'package:math_riddles/utils/size_config.dart';
+import 'package:math_riddles/widget/custom_dialog.dart';
 import 'package:math_riddles/widget/gamestart_button.dart';
 import 'package:math_riddles/widget/myrank_button.dart';
 import 'package:math_riddles/widget/ranking_button.dart';
 import 'package:math_riddles/widget/setting_button.dart';
 import 'package:math_riddles/utils/database.dart';
 import 'package:rate_my_app/rate_my_app.dart';
+import 'package:store_redirect/store_redirect.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -18,6 +20,7 @@ class _HomePageState extends State<HomePage> {
   initState() {
     super.initState();
     initRate();
+    checkUpdate();
   }
 
   @override
@@ -63,6 +66,63 @@ class _HomePageState extends State<HomePage> {
         );
       }
     });
+  }
+
+  void checkUpdate() async {
+    final currentVersion = await DB.getCurrentVersion();
+    final latestVersion = await DB.getLatestVersion();
+    if (currentVersion != latestVersion) {
+      showDialog(
+        context: context,
+        builder: (_) => CustomDialog(
+          title: 'Update Released',
+          contents: [
+            Text('v$latestVersion update has been released!'),
+            Text('Do you want to update app now?'),
+          ],
+          buttons: [
+            Container(
+              height: SizeConfig.safeBlockVertical * 5,
+              margin: EdgeInsets.only(
+                  top: SizeConfig.safeBlockVertical * 1,
+                  bottom: SizeConfig.safeBlockVertical * 2),
+              child: RaisedButton(
+                shape: RoundedRectangleBorder(
+                  side: BorderSide(
+                      color: Theme.of(context).accentColor,
+                      width: SizeConfig.safeBlockVertical * 0.2),
+                  borderRadius: BorderRadius.circular(25),
+                ),
+                color: Theme.of(context).primaryColor,
+                child: Text('Update Now'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  StoreRedirect.redirect();
+                },
+              ),
+            ),
+            SizedBox(width: SizeConfig.safeBlockHorizontal * 2),
+            Container(
+              height: SizeConfig.safeBlockVertical * 5,
+              margin: EdgeInsets.only(
+                  top: SizeConfig.safeBlockVertical * 1,
+                  bottom: SizeConfig.safeBlockVertical * 2),
+              child: RaisedButton(
+                shape: RoundedRectangleBorder(
+                  side: BorderSide(
+                      color: Theme.of(context).accentColor,
+                      width: SizeConfig.safeBlockVertical * 0.2),
+                  borderRadius: BorderRadius.circular(25),
+                ),
+                color: Theme.of(context).primaryColor,
+                child: Text('Maybe Later'),
+                onPressed: () => Navigator.of(context).pop(),
+              ),
+            ),
+          ],
+        ),
+      );
+    }
   }
 }
 

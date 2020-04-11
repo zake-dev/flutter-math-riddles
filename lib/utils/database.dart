@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:package_info/package_info.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:math_riddles/utils/connectivity.dart' as NetworkConnection;
 
@@ -129,5 +130,16 @@ class DB {
         .getDocuments();
     snapshot.documents.forEach((p) => rankers.add(p.data));
     return rankers;
+  }
+
+  static Future<String> getCurrentVersion() async {
+    PackageInfo packageInfo = await PackageInfo.fromPlatform();
+    return packageInfo.version;
+  }
+
+  static Future<String> getLatestVersion() async {
+    final dbInfo =
+        await firestore.collection('admin').document('databaseInfo').get();
+    return dbInfo.data['latestVersion'];
   }
 }
