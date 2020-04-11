@@ -6,6 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:math_riddles/models/multiline_puzzle.dart';
+import 'package:math_riddles/models/nineboxes_puzzle.dart';
 import 'package:math_riddles/models/oneline_puzzle.dart';
 import 'package:math_riddles/models/triangle_puzzle.dart';
 import 'package:math_riddles/pages/success_page.dart';
@@ -172,6 +173,9 @@ class _GamePageState extends State<GamePage> {
               break;
             case 'triangle':
               puzzleContainer = TrianglePuzzle(puzzleData);
+              break;
+            case 'nineBoxes':
+              puzzleContainer = NineBoxesPuzzle(puzzleData);
               break;
           }
 
@@ -533,27 +537,27 @@ class _GamePageState extends State<GamePage> {
                     ],
                   ),
                   onPressed: () async {
-                    // Navigator.of(context).pop();
-                    // showWorkout();
-                    if (!hintShowed) {
-                      _showHintFirst();
-                    } else {
-                      FacebookAudienceNetwork.loadRewardedVideoAd(
-                        placementId: "710644546346434_710647189679503",
-                        listener: (result, value) {
-                          if (result == RewardedVideoAdResult.LOADED)
-                            FacebookAudienceNetwork.showRewardedVideoAd();
-                          if (result == RewardedVideoAdResult.VIDEO_COMPLETE) {
-                            Navigator.of(context).pop();
-                            showWorkout();
-                          }
-                          if (result == RewardedVideoAdResult.ERROR) {
-                            Navigator.of(context).pop();
-                            _showAdFailed('solution');
-                          }
-                        },
-                      );
-                    }
+                    Navigator.of(context).pop();
+                    showWorkout();
+                    // if (!hintShowed) {
+                    //   _showHintFirst();
+                    // } else {
+                    //   FacebookAudienceNetwork.loadRewardedVideoAd(
+                    //     placementId: "710644546346434_710647189679503",
+                    //     listener: (result, value) {
+                    //       if (result == RewardedVideoAdResult.LOADED)
+                    //         FacebookAudienceNetwork.showRewardedVideoAd();
+                    //       if (result == RewardedVideoAdResult.VIDEO_COMPLETE) {
+                    //         Navigator.of(context).pop();
+                    //         showWorkout();
+                    //       }
+                    //       if (result == RewardedVideoAdResult.ERROR) {
+                    //         Navigator.of(context).pop();
+                    //         _showAdFailed('solution');
+                    //       }
+                    //     },
+                    //   );
+                    // }
                   },
                 )
               ],
@@ -704,6 +708,25 @@ class _GamePageState extends State<GamePage> {
   }
 
   void showWorkout() {
+    List<Widget> workouts = [];
+    for (String line in workout) {
+      workouts.add(
+        Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              line,
+              style: TextStyle(
+                fontFamily: 'Montserrat',
+                fontWeight: FontWeight.w300,
+                fontSize: SizeConfig.safeBlockHorizontal * 5.2,
+                height: 1.5,
+              ),
+            ),
+          ],
+        ),
+      );
+    }
     showDialog(
       context: context,
       builder: (_) => FunkyOverlay(
@@ -714,17 +737,7 @@ class _GamePageState extends State<GamePage> {
               mainAxisAlignment: MainAxisAlignment.center,
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Text(
-                  workout.join('\n'),
-                  style: TextStyle(
-                    fontFamily: 'Montserrat',
-                    fontWeight: FontWeight.w300,
-                    fontSize: SizeConfig.safeBlockHorizontal * 5.2,
-                    height: 1.5,
-                  ),
-                ),
-              ],
+              children: workouts,
             ),
           )
         ],

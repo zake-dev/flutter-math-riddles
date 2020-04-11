@@ -11,8 +11,12 @@ final List<CreatePuzzle> easyPuzzle = [
   oneLineNegativeMultiply,
   multiLineAdd,
   multiLineSub,
+  multiLineHideAddSub,
+  multiLineHideMultiply,
   triangleAddSub,
   triangleMultiply,
+  nineBoxes1,
+  nineBoxes2,
 ];
 final List<CreatePuzzle> semiEasyPuzzle = [
   oneLineDoubleAdd,
@@ -22,11 +26,13 @@ final List<CreatePuzzle> semiEasyPuzzle = [
   multiLineEquationEasy,
   triangleDoubleAdd,
   triangleTripleAdd,
+  multiLineHideComplex2,
 ];
 final List<CreatePuzzle> semiHardPuzzle = [
   multiLineComplex1,
   multiLineComplex2,
   multiLineComplex3,
+  multiLineComplex5,
   triangleComplex1,
   triangleComplex2,
   oneLineComplex1,
@@ -35,6 +41,7 @@ final List<CreatePuzzle> hardPuzzle = [
   multiLineEquationHard,
   multiLineComplex4,
   triangleComplex3,
+  multiLineHideComplex1,
 ];
 
 Future<Map<String, dynamic>> getRandomPuzzle() async {
@@ -47,18 +54,19 @@ Future<Map<String, dynamic>> getRandomPuzzle() async {
 
   if (easyModeOn) {
     final pool = ([easyPuzzle, semiEasyPuzzle]..shuffle())[0];
-    return (pool..shuffle())[0]();
+    puzzle = await (pool..shuffle())[0]();
   } else if (normalModeOn) {
     final difficulty = Random().nextDouble();
-    if (difficulty < 0.4) return (easyPuzzle..shuffle())[0]();
-    if (difficulty < 0.7) return (semiEasyPuzzle..shuffle())[0]();
-    if (difficulty < 0.9) return (semiHardPuzzle..shuffle())[0]();
-    if (difficulty < 1.0) return (hardPuzzle..shuffle())[0]();
+    if (difficulty < 0.4) puzzle = await (easyPuzzle..shuffle())[0]();
+    if (difficulty < 0.7) puzzle = await (semiEasyPuzzle..shuffle())[0]();
+    if (difficulty < 0.9) puzzle = await (semiHardPuzzle..shuffle())[0]();
+    if (difficulty < 1.0) puzzle = await (hardPuzzle..shuffle())[0]();
   } else if (hardModeOn) {
     final pool = ([semiHardPuzzle, hardPuzzle]..shuffle())[0];
-    return (pool..shuffle())[0]();
+    puzzle = await (pool..shuffle())[0]();
   }
-  // puzzle = await triangleComplex2();
+
+  // puzzle = await nineBoxes1();
 
   return puzzle;
 }
@@ -919,6 +927,232 @@ Future<Map<String, dynamic>> triangleComplex3() async {
   }
   puzzle['answer'] = newPuzzle[2][2].toString();
   puzzle['puzzle'] = newPuzzle;
+
+  return puzzle;
+}
+
+Future<Map<String, dynamic>> multiLineHideAddSub() async {
+  Map<String, dynamic> puzzle = {
+    'type': 'multiLine',
+    'puzzle': [],
+    'workout': [],
+  };
+  final random = Random();
+
+  // Puzzle Setting
+  puzzle['point'] = random.nextInt(2) + 1;
+  puzzle['hint'] = 'add/subtract';
+  final flag = (random.nextInt(100) > 50) ? -1 : 1;
+  int func(x, y) => (x + y * flag);
+  final ops = (flag < 0) ? '-' : '+';
+  final funcNumber = random.nextInt(30) + 1;
+
+  // Generate random numbers
+  List numbers = List.generate(50, (i) => i + funcNumber - 1);
+  numbers = (numbers..shuffle()).take(4).toList();
+
+  // Build Puzzle
+  List newPuzzle = [];
+  for (final number in numbers) {
+    final answer = func(number, funcNumber);
+    newPuzzle.add('$number = $answer');
+    puzzle['workout'].add('$number $ops $funcNumber = $answer');
+  }
+  puzzle['answer'] = newPuzzle[3].split(' = ')[1];
+  newPuzzle[3] = newPuzzle[3].split(' = ')[0] + ' = ?';
+  puzzle['puzzle'] = newPuzzle;
+
+  return puzzle;
+}
+
+Future<Map<String, dynamic>> multiLineHideMultiply() async {
+  Map<String, dynamic> puzzle = {
+    'type': 'multiLine',
+    'puzzle': [],
+    'workout': [],
+  };
+  final random = Random();
+
+  // Puzzle Setting
+  puzzle['point'] = random.nextInt(2) + 1;
+  puzzle['hint'] = 'multiply';
+  int func(x, y) => (x * y);
+  final ops = 'x';
+  final funcNumber = random.nextInt(8) + 2;
+
+  // Generate random numbers
+  List numbers = List.generate(12, (i) => i + 1);
+  numbers = (numbers..shuffle()).take(4).toList();
+
+  // Build Puzzle
+  List newPuzzle = [];
+  for (final number in numbers) {
+    final answer = func(number, funcNumber);
+    newPuzzle.add('$number = $answer');
+    puzzle['workout'].add('$number $ops $funcNumber = $answer');
+  }
+  puzzle['answer'] = newPuzzle[3].split(' = ')[1];
+  newPuzzle[3] = newPuzzle[3].split(' = ')[0] + ' = ?';
+  puzzle['puzzle'] = newPuzzle;
+
+  return puzzle;
+}
+
+Future<Map<String, dynamic>> multiLineHideComplex1() async {
+  Map<String, dynamic> puzzle = {
+    'type': 'multiLine',
+    'puzzle': [],
+    'workout': [],
+  };
+  final random = Random();
+
+  // Puzzle Setting
+  puzzle['point'] = random.nextInt(1) + 8;
+  puzzle['hint'] = 'add something';
+  int func(x, y) => (x + y);
+  final ops = '+';
+
+  // Generate random numbers
+  final diff = random.nextInt(3) + 1;
+  final extra = random.nextInt(5);
+  List funcNumbers = List.generate(4, (i) => diff * (i + 1) + extra);
+  List numbers = List.generate(20, (i) => i + 1);
+  numbers = (numbers..shuffle()).take(4).toList();
+
+  // Build Puzzle
+  List newPuzzle = [];
+  for (var i = 0; i < 4; i++) {
+    final answer = func(numbers[i], funcNumbers[i]);
+    newPuzzle.add('${numbers[i]} = $answer');
+    puzzle['workout'].add('${numbers[i]} $ops ${funcNumbers[i]} = $answer');
+  }
+  puzzle['answer'] = newPuzzle[3].split(' = ')[1];
+  newPuzzle[3] = newPuzzle[3].split(' = ')[0] + ' = ?';
+  puzzle['puzzle'] = newPuzzle;
+
+  return puzzle;
+}
+
+Future<Map<String, dynamic>> multiLineComplex5() async {
+  Map<String, dynamic> puzzle = {
+    'type': 'multiLine',
+    'puzzle': [],
+    'workout': [],
+  };
+  final random = Random();
+
+  // Puzzle Setting
+  puzzle['point'] = random.nextInt(2) + 6;
+  puzzle['hint'] = 'a x b + b';
+  int func(x, y) => (x * y + y);
+
+  // Generate random numbers
+  List<int> sampleNumbers =
+      (List.generate(13, (i) => i + 1)..shuffle()).take(8).toList();
+  List numbers = [];
+  for (int i = 0; i < 8; i += 2)
+    numbers.add([sampleNumbers[i], sampleNumbers[i + 1]]);
+
+  // Build Puzzle
+  List newPuzzle = [];
+  for (final List<int> pair in numbers) {
+    final a = pair[0];
+    final b = pair[1];
+
+    final answer = func(a, b);
+    newPuzzle.add('$a, $b = $answer');
+    puzzle['workout'].add('($a x $b) + $b = $answer');
+  }
+  puzzle['answer'] = newPuzzle[3].split(' = ')[1];
+  newPuzzle[3] = newPuzzle[3].split(' = ')[0] + ' = ?';
+  puzzle['puzzle'] = newPuzzle;
+
+  return puzzle;
+}
+
+Future<Map<String, dynamic>> multiLineHideComplex2() async {
+  Map<String, dynamic> puzzle = {
+    'type': 'multiLine',
+    'puzzle': [],
+    'workout': [],
+  };
+  final random = Random();
+
+  // Puzzle Setting
+  puzzle['point'] = random.nextInt(2) + 4;
+  puzzle['hint'] = 'a\u00B2 + ...';
+  int func(x, y) => (pow(x, 2) + y);
+
+  // Generate random numbers
+  List<int> numbers =
+      (List.generate(12, (i) => i + 1)..shuffle()).take(4).toList();
+  final extra = random.nextInt(15) + 1;
+
+  // Build Puzzle
+  List newPuzzle = [];
+  for (final number in numbers) {
+    final answer = func(number, extra);
+    newPuzzle.add('$number = $answer');
+    puzzle['workout'].add('$number\u00B2 + $extra = $answer');
+  }
+  puzzle['answer'] = newPuzzle[3].split(' = ')[1];
+  newPuzzle[3] = newPuzzle[3].split(' = ')[0] + ' = ?';
+  puzzle['puzzle'] = newPuzzle;
+
+  return puzzle;
+}
+
+Future<Map<String, dynamic>> nineBoxes1() async {
+  Map<String, dynamic> puzzle = {
+    'type': 'nineBoxes',
+    'puzzle': [],
+    'workout': [],
+  };
+  final random = Random();
+
+  // Puzzle Setting
+  puzzle['point'] = random.nextInt(1) + 3;
+  final base = random.nextInt(12) + 1;
+  puzzle['hint'] = '$base x ?';
+
+  // Generate random numbers
+  List<int> numbers = List.generate(9, (i) => (i + 1) * base);
+  numbers.shuffle();
+
+  // Build Puzzle
+  for (var i = 1; i < 10; i++) {
+    puzzle['workout'].add('$base x $i = ${base * i}');
+  }
+  puzzle['workout'].add('\nAnswer = ${numbers[0]}');
+  puzzle['answer'] = numbers[0].toString();
+  puzzle['puzzle'] = numbers.skip(1).take(8).toList();
+
+  return puzzle;
+}
+
+Future<Map<String, dynamic>> nineBoxes2() async {
+  Map<String, dynamic> puzzle = {
+    'type': 'nineBoxes',
+    'puzzle': [],
+    'workout': [],
+  };
+  final random = Random();
+
+  // Puzzle Setting
+  puzzle['point'] = random.nextInt(1) + 2;
+  puzzle['hint'] = 'a\u00B2';
+
+  // Generate random numbers
+  List<int> numbers = List.generate(9, (i) => pow((i + 1), 2));
+  numbers.shuffle();
+
+  // Build Puzzle
+  for (var i = 1; i < 10; i++) {
+    puzzle['workout'].add('$i\u00B2 = ${pow(i, 2)}');
+  }
+  puzzle['workout'].add('\nAnswer = ${numbers[0]}');
+  puzzle['answer'] = numbers[0].toString();
+  puzzle['puzzle'] = numbers.skip(1).take(8).toList();
 
   return puzzle;
 }
