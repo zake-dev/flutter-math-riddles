@@ -18,6 +18,7 @@ final List<CreatePuzzle> easyPuzzle = [
   nineBoxes1,
   nineBoxes2,
   nineBoxes3,
+  oneLineShift,
 ];
 final List<CreatePuzzle> semiEasyPuzzle = [
   oneLineDoubleAdd,
@@ -75,7 +76,7 @@ Future<Map<String, dynamic>> getRandomPuzzle() async {
     puzzle = await (pool..shuffle())[0]();
   }
 
-  puzzle = await triangleAddSub();
+  // puzzle = await oneLineShift();
 
   return puzzle;
 }
@@ -1310,6 +1311,36 @@ Future<Map<String, dynamic>> multiLineHideComplex3() async {
   puzzle['answer'] = newPuzzle[3].split(' = ')[1];
   newPuzzle[3] = newPuzzle[3].split(' = ')[0] + ' = ?';
   puzzle['puzzle'] = newPuzzle;
+
+  return puzzle;
+}
+
+Future<Map<String, dynamic>> oneLineShift() async {
+  Map<String, dynamic> puzzle = {'type': 'oneLine'};
+  final random = Random();
+
+  List<Object> rotate(List<Object> list, int v) {
+    if (list == null || list.isEmpty) return list;
+    var i = v % list.length;
+    return list.sublist(i)..addAll(list.sublist(0, i));
+  }
+
+  // Puzzle Setting
+  puzzle['hint'] = 'ABCD, BCDA, CDAB, DABC';
+  puzzle['point'] = random.nextInt(3) + 1;
+  puzzle['workout'] = [];
+
+  List<int> digits =
+      (List.generate(9, (i) => i + 1)..shuffle()).take(4).toList();
+  List<String> numbers = [];
+  // Generate
+  for (var i = 0; i < 4; i++) {
+    numbers.add(digits.join(''));
+    digits = rotate(digits, 1);
+  }
+  puzzle['workout'].add('${numbers[3]}');
+  puzzle['puzzle'] = numbers.take(3).join(', ') + ', ?';
+  puzzle['answer'] = '${numbers[3]}';
 
   return puzzle;
 }
