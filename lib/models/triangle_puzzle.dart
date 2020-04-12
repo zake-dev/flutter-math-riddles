@@ -36,10 +36,10 @@ class TrianglePuzzle extends Center {
 Widget _buildTriangle(numbers, {isAnswer = false}) {
   final gridSize = min(
       SizeConfig.safeBlockHorizontal * 13, SizeConfig.safeBlockVertical * 7);
-  final numberFontSize = min(
-      SizeConfig.safeBlockHorizontal * 6, SizeConfig.safeBlockVertical * 3.7);
-  final triangleFontSize = min(
-      SizeConfig.safeBlockHorizontal * 9, SizeConfig.safeBlockVertical * 6.2);
+  final numberBoxSize = min(
+      SizeConfig.safeBlockHorizontal * 10, SizeConfig.safeBlockVertical * 6);
+  final numberFontSize =
+      min(SizeConfig.safeBlockHorizontal * 6, SizeConfig.safeBlockVertical * 4);
 
   return Container(
     // decoration: BoxDecoration(color: Colors.white),
@@ -57,15 +57,18 @@ Widget _buildTriangle(numbers, {isAnswer = false}) {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               SizedBox(height: gridSize, width: gridSize),
-              SizedBox(
+              Container(
                 height: gridSize,
                 width: gridSize,
-                child: Align(
-                  alignment: Alignment.bottomCenter,
-                  child: Text(
-                    '${isAnswer ? '?' : numbers[2]}',
-                    style: TextStyle(
-                      fontSize: numberFontSize,
+                alignment: Alignment.bottomCenter,
+                child: SizedBox(
+                  height: numberBoxSize,
+                  width: numberBoxSize,
+                  child: FittedBox(
+                    fit: BoxFit.scaleDown,
+                    child: Text(
+                      '${isAnswer ? '?' : numbers[2]}',
+                      style: TextStyle(fontSize: numberFontSize, height: 1),
                     ),
                   ),
                 ),
@@ -79,17 +82,14 @@ Widget _buildTriangle(numbers, {isAnswer = false}) {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               SizedBox(height: gridSize, width: gridSize),
-              SizedBox(
+              Container(
                 height: gridSize,
                 width: gridSize,
-                child: Align(
-                  alignment: Alignment.center,
+                child: FittedBox(
+                  fit: BoxFit.contain,
                   child: Text(
                     '▲',
-                    style: TextStyle(
-                      fontSize: triangleFontSize,
-                      height: 1,
-                    ),
+                    style: TextStyle(height: 1),
                   ),
                 ),
               ),
@@ -101,31 +101,35 @@ Widget _buildTriangle(numbers, {isAnswer = false}) {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              SizedBox(
+              Container(
                 height: gridSize,
                 width: gridSize,
-                child: Align(
-                  alignment: Alignment.topRight,
-                  child: Text(
-                    '${numbers[1].abs()}',
-                    style: TextStyle(
-                      fontSize: numberFontSize,
-                      height: 1,
+                alignment: Alignment.topRight,
+                child: SizedBox(
+                  height: numberBoxSize,
+                  width: numberBoxSize,
+                  child: FittedBox(
+                    fit: BoxFit.scaleDown,
+                    child: Text(
+                      '${numbers[1].abs()}',
+                      style: TextStyle(fontSize: numberFontSize, height: 1),
                     ),
                   ),
                 ),
               ),
               SizedBox(height: gridSize, width: gridSize),
-              SizedBox(
+              Container(
                 height: gridSize,
                 width: gridSize,
-                child: Align(
-                  alignment: Alignment.topLeft,
-                  child: Text(
-                    '${numbers[0].abs()}',
-                    style: TextStyle(
-                      fontSize: numberFontSize,
-                      height: 1,
+                alignment: Alignment.topLeft,
+                child: SizedBox(
+                  height: numberBoxSize,
+                  width: numberBoxSize,
+                  child: FittedBox(
+                    fit: BoxFit.scaleDown,
+                    child: Text(
+                      '${numbers[0].abs()}',
+                      style: TextStyle(fontSize: numberFontSize, height: 1),
                     ),
                   ),
                 ),
