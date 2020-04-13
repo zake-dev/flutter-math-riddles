@@ -1,7 +1,7 @@
 name: math_riddles
 description: Try endless math puzzles and riddles! 
 
-version: 1.2.1+5
+version: 1.2.2+6
 
 environment:
   sdk: ">=2.1.0 <3.0.0"

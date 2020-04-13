@@ -28,6 +28,11 @@ class DB {
   }
 
   static Future<void> fetchData(String deviceID) async {
+    final prefs = await SharedPreferences.getInstance();
+    if (prefs.containsKey('hasRecord')) {
+      return;
+    }
+
     final hasConnection = await NetworkConnection.check();
     if (!hasConnection) {
       return;
@@ -125,6 +130,7 @@ class DB {
     List<Map<String, dynamic>> rankers = [];
     final snapshot = await firestore
         .collection('users')
+        .where('score', isGreaterThan: 0)
         .orderBy('score', descending: true)
         .limit(50)
         .getDocuments();

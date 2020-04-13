@@ -29,7 +29,7 @@ class App extends StatelessWidget {
     final themeNotifier = Provider.of<ThemeNotifier>(context);
     return AppBuilder(
       builder: (context) => MaterialApp(
-        title: 'Math Riddles - Infinite Math Challenges, Puzzles, Riddles',
+        title: 'Infinite Math Riddles - Puzzles, Riddles, Challenges',
         theme: themeNotifier.getTheme(),
         home: Splashscreen(),
       ),

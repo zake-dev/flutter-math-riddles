@@ -41,7 +41,7 @@ class CustomDialog extends StatelessWidget {
         color: Theme.of(context).backgroundColor,
         border: Border.all(
           color: Theme.of(context).accentColor,
-          width: SizeConfig.safeBlockHorizontal * 0.2,
+          width: 2,
         ),
         borderRadius: BorderRadius.circular(15.0),
       ),

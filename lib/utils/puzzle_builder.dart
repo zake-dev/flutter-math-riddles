@@ -42,13 +42,13 @@ final List<CreatePuzzle> semiHardPuzzle = [
   triangleComplex1,
   triangleComplex2,
   oneLineComplex1,
+  multiLineHideComplex1,
   multiLineHideComplex3,
 ];
 final List<CreatePuzzle> hardPuzzle = [
   multiLineEquationHard,
   multiLineComplex4,
   triangleComplex3,
-  multiLineHideComplex1,
 ];
 
 Future<Map<String, dynamic>> getRandomPuzzle() async {
@@ -233,7 +233,7 @@ Future<Map<String, dynamic>> oneLineTripleAdd() async {
   puzzle['point'] = random.nextInt(1) + 4;
   puzzle['workout'] = [];
 
-  int initialNumber = random.nextInt(6) + 3;
+  int initialNumber = random.nextInt(6) + 5;
   final funcNumber = (random.nextInt(100) > 50)
       ? random.nextInt(8) + 1
       : -(random.nextInt(8) + 1);
@@ -506,7 +506,7 @@ Future<Map<String, dynamic>> multiLineComplex2() async {
     final answer = (sumA + sumB * flag).abs();
     newPuzzle.add('${pair[0]}, ${pair[1]} = $answer');
     puzzle['workout'].add(
-        '${(flag < 0) ? '| ' : ''}(${a.join(' + ')}) ${(flag < 0) ? '-' : '+'} (${b.join(' + ')})${(flag < 0) ? ' |' : ''} = $answer');
+        '(${(sumA > sumB) ? a.join(' + ') : b.join(' + ')}) ${(flag < 0) ? '-' : '+'} (${(sumA < sumB) ? a.join(' + ') : b.join(' + ')}) = $answer');
   }
   puzzle['answer'] = newPuzzle[3].split(' = ')[1];
   newPuzzle[3] = newPuzzle[3].split(' = ')[0] + ' = ?';
@@ -1025,7 +1025,7 @@ Future<Map<String, dynamic>> multiLineHideComplex1() async {
   final random = Random();
 
   // Puzzle Setting
-  puzzle['point'] = random.nextInt(1) + 8;
+  puzzle['point'] = random.nextInt(2) + 6;
   puzzle['hint'] = '+ a';
   int func(x, y) => (x + y);
   final ops = '+';
