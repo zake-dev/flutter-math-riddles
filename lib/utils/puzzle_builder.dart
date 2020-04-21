@@ -1325,7 +1325,7 @@ Future<Map<String, dynamic>> oneLineShift() async {
 
   // Puzzle Setting
   puzzle['hint'] = 'ABCD, BCDA, CDAB, DABC';
-  puzzle['point'] = random.nextInt(3) + 1;
+  puzzle['point'] = 1;
   puzzle['workout'] = [];
 
   List<int> digits =

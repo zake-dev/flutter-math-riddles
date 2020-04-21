@@ -15,6 +15,7 @@ import 'package:math_riddles/utils/size_config.dart';
 import 'package:math_riddles/utils/puzzle_builder.dart' as PuzzleBuilder;
 import 'package:math_riddles/widget/funky_overlay.dart';
 import 'package:math_riddles/widget/setting_button.dart';
+import 'package:math_riddles/widget/calculator_button.dart';
 
 class GamePage extends StatefulWidget {
   @override
@@ -212,6 +213,10 @@ class _GamePageState extends State<GamePage> {
                       ),
                     )),
                 puzzleContainer,
+                Align(
+                  alignment: Alignment(0.95, 0.9),
+                  child: CalculatorButton(context),
+                )
               ],
             ),
           );
@@ -332,6 +337,7 @@ class _GamePageState extends State<GamePage> {
           'Enter',
           style: TextStyle(
             fontFamily: 'Montserrat',
+            fontWeight: FontWeight.w700,
             fontSize: SizeConfig.safeBlockHorizontal * 4,
           ),
         ),
