@@ -1315,7 +1315,6 @@ Future<Map<String, dynamic>> multiLineHideComplex3() async {
 
 Future<Map<String, dynamic>> oneLineShift() async {
   Map<String, dynamic> puzzle = {'type': 'oneLine'};
-  final random = Random();
 
   List<Object> rotate(List<Object> list, int v) {
     if (list == null || list.isEmpty) return list;
