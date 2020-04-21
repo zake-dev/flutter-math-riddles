@@ -29,8 +29,6 @@ final List<CreatePuzzle> semiEasyPuzzle = [
   triangleDoubleAdd,
   triangleTripleAdd,
   multiLineHideComplex2,
-  multiLineComplex6,
-  multiLineComplex7,
 ];
 final List<CreatePuzzle> semiHardPuzzle = [
   multiLineComplex1,
@@ -202,7 +200,7 @@ Future<Map<String, dynamic>> oneLineDoubleAdd() async {
   puzzle['point'] = random.nextInt(1) + 4;
   puzzle['workout'] = [];
 
-  int initialNumber = random.nextInt(8) + 3;
+  int initialNumber = random.nextInt(8) + 5;
   final funcNumber = (random.nextInt(100) > 50)
       ? random.nextInt(4) + 1
       : -(random.nextInt(4) + 1);
@@ -1216,7 +1214,7 @@ Future<Map<String, dynamic>> multiLineComplex6() async {
   final random = Random();
 
   // Puzzle Setting
-  puzzle['point'] = random.nextInt(2) + 5;
+  puzzle['point'] = random.nextInt(2) + 6;
   puzzle['hint'] = '(a + b) x (a - b)';
   int func(x, y) => ((x + y) * (x - y).abs());
 
@@ -1253,7 +1251,7 @@ Future<Map<String, dynamic>> multiLineComplex7() async {
   final random = Random();
 
   // Puzzle Setting
-  puzzle['point'] = random.nextInt(2) + 5;
+  puzzle['point'] = random.nextInt(2) + 6;
   int flag = (random.nextInt(100) > 50) ? -1 : 1;
   puzzle['hint'] = '(a x b) ${(flag < 0) ? '-' : '+'} (a + b)';
   int func(x, y) => ((x * y) + flag * (x + y).abs());
